@@ -1,0 +1,40 @@
+#!/bin/bash
+# Launcher for the Skill Tree app.
+#
+# Double-click "Skill Tree.app" in Finder to start a tiny local web server and
+# open the app in your browser. The app keeps running (you'll see it in the
+# Dock) until you quit it, which stops the server.
+#
+# This file lives at:  Skill Tree.app/Contents/MacOS/skill-tree
+# so the project folder is three directories up.
+
+ROOT="$(cd "$(dirname "$0")/../../.." && pwd)" || exit 1
+cd "$ROOT" || exit 1
+
+if [ ! -f "$ROOT/index.html" ]; then
+	osascript -e 'display alert "Skill Tree" message "Could not find index.html next to the app. Keep \"Skill Tree.app\" inside the project folder."'
+	exit 1
+fi
+
+if ! command -v python3 >/dev/null 2>&1; then
+	osascript -e 'display alert "Skill Tree" message "Python 3 is required but was not found.
+
+Install the Xcode Command Line Tools with:
+    xcode-select --install
+
+or get Python from python.org, then try again."'
+	exit 1
+fi
+
+# Find a free port starting at 8765.
+PORT=8765
+while lsof -i :"$PORT" >/dev/null 2>&1; do
+	PORT=$((PORT + 1))
+done
+
+# Open the browser shortly after the server comes up.
+( sleep 1; open "http://127.0.0.1:${PORT}/index.html" ) &
+
+# Replace this script with the server process, so quitting the app
+# (Dock > Quit, or Cmd-Q) stops the server cleanly with no orphan.
+exec python3 -m http.server "$PORT" --bind 127.0.0.1 >/dev/null 2>&1

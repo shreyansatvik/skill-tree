@@ -13,9 +13,16 @@ No build step, no dependencies, no internet. Plain HTML, CSS and JavaScript.
 
 ## Running it on macOS
 
-Double-click **`run.command`** in Finder. It starts a tiny local server
-(Python 3, already on macOS) and opens the app in your browser. Close the
-Terminal window to stop it.
+Double-click **`Skill Tree.app`** in Finder. It starts a tiny local server
+(Python 3, already on macOS) and opens the app in your browser. The app stays
+in the Dock while it runs — quit it (Dock → Quit, or Cmd-Q) to stop the server.
+Keep the `.app` inside this project folder.
+
+> The first time you open it, macOS may say it's from an unidentified
+> developer. Right-click the app → **Open** → **Open**, just once.
+
+**`run.command`** does the same thing from a Terminal window; close the window
+to stop it.
 
 From a terminal instead:
 
@@ -28,8 +35,7 @@ Opening `index.html` directly by double-clicking also works, but the browser
 may refuse to remember your profile and progress on `file://` URLs — use
 `run.command` if you want either to be saved.
 
-> The first time you double-click, macOS may ask permission to run it.
-> If Finder opens the file in a text editor instead, run
+> If Finder opens `run.command` in a text editor instead of running it, run
 > `chmod +x run.command` once in Terminal.
 
 ## Setting up
