@@ -32,8 +32,21 @@ while lsof -i :"$PORT" >/dev/null 2>&1; do
 	PORT=$((PORT + 1))
 done
 
-# Open the browser shortly after the server comes up.
-( sleep 1; open "http://127.0.0.1:${PORT}/index.html" ) &
+# Open the browser as soon as the server actually accepts a connection.
+# A fixed sleep races the server on a cold start and the browser then shows
+# "cannot connect to the server", so poll the port instead.
+(
+	for _ in $(seq 1 100); do
+		if nc -z 127.0.0.1 "$PORT" >/dev/null 2>&1; then
+			open "http://127.0.0.1:${PORT}/index.html"
+			exit 0
+		fi
+		sleep .1
+	done
+	osascript -e 'display alert "Skill Tree" message "The local server did not start within 10 seconds.
+
+Run ./run.command from Terminal to see the error."'
+) &
 
 # Replace this script with the server process, so quitting the app
 # (Dock > Quit, or Cmd-Q) stops the server cleanly with no orphan.

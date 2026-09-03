@@ -12,6 +12,12 @@ python3 -m http.server "$PORT" --bind 127.0.0.1 >/dev/null 2>&1 &
 SERVER_PID=$!
 trap 'kill $SERVER_PID 2>/dev/null' EXIT
 
-sleep 1
+# Wait until the server accepts a connection before opening the browser;
+# a fixed sleep races a cold start and the browser shows "cannot connect".
+for _ in $(seq 1 100); do
+  nc -z 127.0.0.1 "$PORT" >/dev/null 2>&1 && break
+  sleep .1
+done
+
 open "http://127.0.0.1:$PORT/index.html"
 wait $SERVER_PID
