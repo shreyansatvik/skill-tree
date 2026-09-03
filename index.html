@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skill Tree — Life Skills Progression</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌳</text></svg>">
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <div class="brand">
+      <h1>🌳 Skill Tree</h1>
+      <span class="sub"><span id="total">0</span> skills · <span id="branches">0</span> branches · 5 tiers</span>
+    </div>
+
+    <div class="search-wrap">
+      <span class="mag">⌕</span>
+      <input id="search" type="search" placeholder="Search skills…" autocomplete="off">
+      <span class="kbd">/</span>
+    </div>
+    <span id="hits" class="hits"></span>
+
+    <label class="switch" title="Hide skills whose prerequisites you haven't met">
+      <input type="checkbox" id="availToggle"> Hide locked
+    </label>
+
+    <div class="spacer"></div>
+
+    <div class="tools">
+      <button class="tool" id="zoomOut" title="Zoom out (−)">−</button>
+      <span id="zoomLabel">100%</span>
+      <button class="tool" id="zoomIn" title="Zoom in (+)">+</button>
+      <button class="tool" id="fit" title="Fit to screen (f)">Fit</button>
+      <button class="tool" id="export" title="Download your progress as JSON">Export</button>
+      <button class="tool" id="importBtn" title="Load a progress file">Import</button>
+      <input type="file" id="importInput" accept="application/json" hidden>
+      <button class="tool danger" id="reset" title="Clear all progress">Reset</button>
+    </div>
+  </header>
+
+  <div id="warn" hidden></div>
+
+  <div class="main">
+
+    <aside class="sidebar">
+      <div class="level-card">
+        <div class="level-row">
+          <div class="level-badge" id="level">1</div>
+          <div class="level-info">
+            <div class="lbl">Total XP</div>
+            <div class="val"><span id="xp">0</span> XP</div>
+            <div class="bar"><i id="levelBar"></i></div>
+          </div>
+        </div>
+        <div class="tiny"><span id="levelHint">—</span></div>
+
+        <div class="bar big" style="margin-top:14px"><i id="overallBar"></i></div>
+        <div class="tiny">
+          <span id="countLabel">0 / 0 skills</span>
+          <span id="availableLabel">—</span>
+        </div>
+      </div>
+
+      <div class="side-title">
+        Branches
+        <span class="side-actions">
+          <button class="mini" id="catAll" title="Show every branch">all</button>
+          <button class="mini" id="catNone" title="Show just the first branch">one</button>
+        </span>
+      </div>
+      <div class="side-hint block">Click a name to hide it · <b>only</b> to focus one branch</div>
+      <div id="catList"></div>
+
+      <div class="side-title">Legend</div>
+      <div class="legend">
+        <div><span class="dot learned"></span> Learned</div>
+        <div><span class="dot available"></span> Unlocked — ready to start</div>
+        <div><span class="dot locked"></span> Locked — needs prerequisites</div>
+        <div><span class="dot" style="background:#2b3549"></span> Solid line: same branch</div>
+        <div><span class="dot" style="background:repeating-linear-gradient(90deg,#2b3549 0 3px,transparent 3px 6px)"></span> Dashed: cross-branch</div>
+      </div>
+
+      <div class="side-title">Shortcuts</div>
+      <div class="keys">
+        <b>click</b> select skill<br>
+        <b>⇧ click</b> / <b>double-click</b> learn or unlearn<br>
+        <b>drag</b> pan · <b>⌘ scroll</b> zoom<br>
+        <b>/</b> search · <b>f</b> fit · <b>esc</b> deselect
+      </div>
+    </aside>
+
+    <main class="viewport" id="viewport">
+      <div id="canvas">
+        <div id="chrome"></div>
+        <svg id="svg" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div id="nodeLayer"></div>
+      </div>
+    </main>
+
+    <aside class="detail" id="detail"></aside>
+
+  </div>
+</div>
+
+<!-- categories, tiers and the registry every domain file appends to -->
+<script src="js/skills.js"></script>
+
+<!-- the skill data itself, one file per branch -->
+<script src="js/skills/academic.js"></script>
+<script src="js/skills/business.js"></script>
+<script src="js/skills/career.js"></script>
+<script src="js/skills/civic.js"></script>
+<script src="js/skills/craft.js"></script>
+<script src="js/skills/creative.js"></script>
+<script src="js/skills/family.js"></script>
+<script src="js/skills/food.js"></script>
+<script src="js/skills/health.js"></script>
+<script src="js/skills/language.js"></script>
+<script src="js/skills/learning.js"></script>
+<script src="js/skills/mind.js"></script>
+<script src="js/skills/money.js"></script>
+<script src="js/skills/music.js"></script>
+<script src="js/skills/nature.js"></script>
+<script src="js/skills/outdoors.js"></script>
+<script src="js/skills/physical.js"></script>
+<script src="js/skills/play.js"></script>
+<script src="js/skills/practical.js"></script>
+<script src="js/skills/safety.js"></script>
+<script src="js/skills/science.js"></script>
+<script src="js/skills/social.js"></script>
+<script src="js/skills/spirit.js"></script>
+<script src="js/skills/style.js"></script>
+<script src="js/skills/tech.js"></script>
+<script src="js/skills/travel.js"></script>
+
+<script src="js/layout.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

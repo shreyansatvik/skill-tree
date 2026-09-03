@@ -1,0 +1,157 @@
+/* ==================================================================
+   Civic & Legal — being a competent citizen, dealing with the state,
+   and knowing your rights before you need them.
+================================================================== */
+
+addSkills({ cat: 'civic', group: 'Documents & Admin' }, [
+  { id:'identity-docs', name:'Identity Documents', tier:1,
+    desc:'Birth certificate, ID, passport, licence — how to get, renew and safely store them.' },
+  { id:'form-filling', name:'Official Forms', tier:1,
+    desc:'Read a government form carefully and complete it so it is not returned.' },
+  { id:'record-keeping', name:'Keeping Records', tier:2, req:['form-filling','file-org'],
+    desc:'What to keep, for how long, and where you will find it under pressure.' },
+  { id:'bureaucracy', name:'Navigating Bureaucracy', tier:3, req:['record-keeping','assertive'],
+    desc:'Reference numbers, escalation, written trails and outlasting a bad process.' },
+  { id:'complaints', name:'Making a Complaint', tier:3, req:['bureaucracy','sentence-craft'],
+    desc:'Escalate through the right channels, in writing, to the person who can decide.' },
+  { id:'ombudsman', name:'Regulators & Ombudsmen', tier:4, req:['complaints','consumer-rights'],
+    desc:'Know who supervises a bank, landlord or insurer and how to bring a case.' },
+  { id:'foi', name:'Freedom of Information', tier:4, req:['bureaucracy','source-search'],
+    desc:'Write a request that gets documents rather than a refusal.' },
+]);
+
+addSkills({ cat: 'civic', group: 'Law Basics' }, [
+  { id:'legal-literacy', name:'Legal Literacy', tier:2, req:['read-fluency'],
+    desc:'Civil vs. criminal, courts, and what a solicitor actually does.' },
+  { id:'contracts-reading', name:'Reading a Contract', tier:3, req:['legal-literacy','close-reading'],
+    desc:'Find the term, notice, liability and termination clauses that will matter later.' },
+  { id:'consumer-rights', name:'Consumer Rights', tier:3, req:['legal-literacy'],
+    desc:'Refunds, faulty goods, cancellation periods and chargebacks.' },
+  { id:'tenant-rights', name:'Tenant & Housing Rights', tier:3, req:['contracts-reading','renting'],
+    desc:'Deposits, repairs, notice and eviction — what a landlord can and cannot do.' },
+  { id:'employment-rights', name:'Employment Rights', tier:3, req:['legal-literacy','contracts-reading'],
+    desc:'Contracts, hours, dismissal, discrimination and where to take a grievance.' },
+  { id:'police-encounter', name:'Dealing With Police', tier:3, req:['legal-literacy','emotion-regulation'],
+    desc:'Know what you must do, what you need not say, and how to ask for a solicitor.' },
+  { id:'small-claims', name:'Small Claims', tier:4, req:['contracts-reading','bureaucracy'],
+    desc:'Take a dispute to court yourself for a few hundred, and prepare the evidence.' },
+  { id:'family-law', name:'Family Law Basics', tier:4, req:['legal-literacy','contracts-reading'],
+    desc:'Marriage, cohabitation, custody and what the law assumes if you have not decided.' },
+  { id:'wills', name:'Wills & Estate Planning', tier:4, req:['legal-literacy','record-keeping'],
+    desc:'A valid will, executors, power of attorney and telling someone where it is.' },
+  { id:'ip-law', name:'Intellectual Property', tier:4, req:['contracts-reading','legal-literacy'],
+    desc:'Copyright, trademark, licensing and who owns what you made at work.' },
+  { id:'legal-representation', name:'Instructing a Lawyer', tier:5, req:['small-claims','negotiation'],
+    desc:'Choose counsel, scope the work, control costs and be a useful client.' },
+]);
+
+addSkills({ cat: 'civic', group: 'Government & Voting' }, [
+  { id:'civics-basics', name:'How Government Works', tier:2, req:['read-fluency'],
+    desc:'Branches, tiers, elections and who is actually responsible for the pothole.' },
+  { id:'voting', name:'Voting', tier:2, req:['civics-basics'],
+    desc:'Register, understand the system you vote under, and turn up.' },
+  { id:'political-literacy', name:'Political Literacy', tier:3, req:['civics-basics','misinformation'],
+    desc:'Read a manifesto, a poll and a budget without being led by the framing.' },
+  { id:'contacting-representatives', name:'Contacting Representatives', tier:3, req:['civics-basics','sentence-craft'],
+    desc:'Write the letter or attend the surgery in the way that actually gets logged.' },
+  { id:'public-consultation', name:'Responding to Consultations', tier:4, req:['contacting-representatives','policy-reading'],
+    desc:'Submit evidence at the point in the process where it can still change something.' },
+  { id:'policy-reading', name:'Reading Policy & Legislation', tier:4, req:['close-reading','civics-basics'],
+    desc:'Work through a bill or regulation and find what it actually does.' },
+  { id:'campaigning', name:'Campaigning', tier:5, req:['coalition-building','advocacy','political-literacy'],
+    desc:'Run a campaign with a target, a theory of change and a plan to reach it.' },
+  { id:'holding-office', name:'Serving in Office', tier:5, req:['campaigning','governance','facilitation'],
+    desc:'Take a seat on a council, board or committee and do the unglamorous work.' },
+]);
+
+addSkills({ cat: 'civic', group: 'Community Life' }, [
+  { id:'community-participation', name:'Turning Up Locally', tier:2, req:['politeness'],
+    desc:'Know your neighbours, your local groups, and what already exists near you.' },
+  { id:'volunteering', name:'Volunteering', tier:2, req:['community-participation'],
+    desc:'Give regular time to something local and be genuinely useful while you are there.' },
+  { id:'fundraising', name:'Fundraising', tier:4, req:['asking','storytelling','budgeting'],
+    desc:'Raise real money for a cause from people who were not planning to give it.' },
+  { id:'governance', name:'Committee & Board Work', tier:4, req:['facilitation','record-keeping','financial-statements'],
+    desc:'Minutes, quorum, conflicts of interest and actual fiduciary responsibility.' },
+  { id:'mutual-aid', name:'Organising Mutual Aid', tier:4, req:['community-participation','volunteering','project-planning'],
+    desc:'Get a street or estate to look after itself in an ordinary week and in a crisis.' },
+  { id:'jury-service', name:'Jury Service', tier:3, req:['critical-reading','legal-literacy'],
+    desc:'Weigh evidence and deliberate honestly with eleven strangers.' },
+  { id:'civil-resistance', name:'Protest & Civil Resistance', tier:5, req:['campaigning','risk-assessment','police-encounter'],
+    desc:'Organise or join lawful protest, with an understanding of the risks you accept.' },
+  { id:'institution-building', name:'Building an Institution', tier:5, req:['governance','fundraising','leadership'],
+    desc:'Found something with a constitution, funding and a life longer than your interest.' },
+]);
+
+addSkills({ cat: 'civic', group: 'Information & Accountability' }, [
+  { id:'news-literacy', name:'Reading the News', tier:3, req:['misinformation'],
+    desc:'Sourcing, framing and ownership — reading a story for what it leaves out.' },
+  { id:'statistics-in-public', name:'Public Statistics', tier:4, req:['statistics','political-literacy'],
+    desc:'Find the official figures yourself and check what a claim is actually based on.' },
+  { id:'budget-scrutiny', name:'Reading a Public Budget', tier:5, req:['financial-statements','policy-reading'],
+    desc:'Follow the money through a council or department and find what changed.' },
+  { id:'investigative-method', name:'Investigative Research', tier:5, req:['foi','primary-sources','source-search'],
+    desc:'Build a documented case from records, registers and people who will talk.' },
+  { id:'whistleblowing', name:'Whistleblowing', tier:5, req:['workplace-grievance','legal-representation','moral-courage'],
+    desc:'Evidence, protected disclosure and the personal cost, understood before you act.' },
+]);
+
+addSkills({ cat: 'civic', group: 'Rights & Protection' }, [
+  { id:'data-rights', name:'Your Data Rights', tier:3, req:['privacy-management','legal-literacy'],
+    desc:'Access requests, erasure and objecting to how your data is used.' },
+  { id:'discrimination-law', name:'Discrimination & Equality Law', tier:4, req:['employment-rights','legal-literacy'],
+    desc:'Protected characteristics, reasonable adjustments and how a claim actually works.' },
+  { id:'immigration-basics', name:'Immigration & Status', tier:4, req:['passport-visa','bureaucracy'],
+    desc:'Visas, residence, citizenship routes and the consequences of a missed deadline.' },
+  { id:'benefits-appeals', name:'Appealing a Decision', tier:4, req:['benefits-system','complaints'],
+    desc:'Mandatory reconsideration, tribunals and the evidence that actually wins.' },
+  { id:'legal-aid', name:'Finding Free Legal Help', tier:3, req:['legal-literacy','source-search'],
+    desc:'Advice centres, clinics and duty solicitors — help exists if you know where.' },
+  { id:'child-rights', name:'Children’s Rights & Schooling', tier:4, req:['legal-literacy','school-navigation'],
+    desc:'Admissions, exclusions, special provision and how to appeal each of them.' },
+]);
+
+addSkills({ cat: 'civic', group: 'Everyday Citizenship' }, [
+  { id:'local-knowledge', name:'Knowing Your Area', tier:1,
+    desc:'Council, GP, library, tip, police station — what exists and how to reach it.' },
+  { id:'reporting-problems', name:'Reporting Local Problems', tier:2, req:['local-knowledge','form-filling'],
+    desc:'Potholes, fly-tipping, streetlights — report them properly and follow up.' },
+  { id:'neighbourliness', name:'Being a Good Neighbour', tier:2, req:['politeness','community-participation'],
+    desc:'Noise, parking, bins and parcels handled before they become disputes.' },
+  { id:'neighbour-disputes', name:'Neighbour Disputes', tier:4, req:['neighbourliness','conflict','tenant-rights'],
+    desc:'Boundaries, noise and trees resolved without solicitors where possible.' },
+  { id:'public-meetings', name:'Attending Public Meetings', tier:3, req:['civics-basics','meetings'],
+    desc:'Turn up to the planning or council meeting where the decision actually happens.' },
+  { id:'petitions', name:'Petitions & Local Campaigns', tier:3, req:['reporting-problems','contacting-representatives'],
+    desc:'Gather names for something specific and get it in front of the right body.' },
+  { id:'civic-tech', name:'Using Public Data', tier:4, req:['data-analysis','foi'],
+    desc:'Find and use open data on planning, spending, crime and transport.' },
+]);
+
+addSkills({ cat: 'civic', group: 'Understanding Society' }, [
+  { id:'inequality-literacy', name:'Understanding Inequality', tier:4, req:['statistics-in-public','economics-literacy'],
+    desc:'Income, wealth and opportunity measured properly rather than argued about.' },
+  { id:'institutions', name:'How Institutions Work', tier:4, req:['civics-basics','systems-thinking'],
+    desc:'Courts, regulators, universities and press — what each is for and how it fails.' },
+  { id:'media-ownership', name:'Who Owns the Media', tier:4, req:['news-literacy','institutions'],
+    desc:'Follow ownership and funding to understand the pressures on what you read.' },
+  { id:'international-affairs', name:'Following International Affairs', tier:4, req:['geography-literacy','news-literacy'],
+    desc:'Treaties, blocs and conflicts followed with enough context to be worth having a view.' },
+  { id:'history-of-rights', name:'How Rights Were Won', tier:4, req:['historical-context','civics-basics'],
+    desc:'The specific campaigns behind things now assumed to have always existed.' },
+  { id:'civic-courage', name:'Standing Up in Public', tier:5, req:['moral-courage','public-meetings','advocacy'],
+    desc:'Say the unpopular necessary thing where it is recorded and attributed to you.' },
+]);
+
+addSkills({ cat: 'civic', group: 'Money & the State' }, [
+  { id:'council-services', name:'Using Council Services', tier:2, req:['local-knowledge','form-filling'],
+    desc:'Bins, parking, schools, licences and housing — what they do and how to ask.' },
+  { id:'public-services-navigation', name:'Navigating Public Services', tier:4, req:['bureaucracy','benefits-system'],
+    desc:'Health, housing and welfare systems worked through on someone else’s behalf.' },
+  { id:'charity-choosing', name:'Choosing Where to Give', tier:4, req:['generosity-giving','impact-measurement'],
+    desc:'Evidence, overheads and counterfactual impact rather than the best advert.' },
+  { id:'volunteering-skills', name:'Volunteering Your Skills', tier:4, req:['volunteering','governance'],
+    desc:'Give a professional skill to an organisation that could not otherwise buy it.' },
+  { id:'trusteeship', name:'Being a Trustee', tier:5, req:['governance','financial-statements','professional-ethics'],
+    desc:'Legal duties, risk and saying no to the founder when it is necessary.' },
+]);

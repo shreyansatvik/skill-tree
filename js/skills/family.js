@@ -1,0 +1,200 @@
+/* ==================================================================
+   Family & Relationships — friendship, partnership, raising children,
+   and the people you did not choose.
+================================================================== */
+
+addSkills({ cat: 'family', group: 'Friendship' }, [
+  { id:'making-friends', name:'Making Friends', tier:2, req:['small-talk','conversation'],
+    desc:'Turn repeated contact into an actual friendship by initiating, repeatedly.' },
+  { id:'friendship-maintenance', name:'Keeping Friendships Alive', tier:3, req:['making-friends','keeping-in-touch'],
+    desc:'Show up over decades through moves, children and long quiet stretches.' },
+  { id:'friendship-repair', name:'Repairing a Friendship', tier:4, req:['friendship-maintenance','apologising'],
+    desc:'Address the drift or the injury directly instead of letting it quietly end.' },
+  { id:'ending-friendship', name:'Letting a Friendship Go', tier:4, req:['boundaries','grief'],
+    desc:'Recognise a relationship that has become corrosive and step back cleanly.' },
+  { id:'deep-friendship', name:'Deep Friendship', tier:5, req:['friendship-repair','self-disclosure','social-support'],
+    desc:'A handful of relationships with full honesty, history and mutual obligation.' },
+]);
+
+addSkills({ cat: 'family', group: 'Dating & Courtship' }, [
+  { id:'flirting', name:'Flirting', tier:2, req:['small-talk','body-language'],
+    desc:'Signal interest clearly and lightly, and read a signal back without pushing.' },
+  { id:'dating', name:'Dating', tier:3, req:['flirting','conversation'],
+    desc:'Ask, plan, show up, and find out whether you actually like each other.' },
+  { id:'consent', name:'Consent', tier:2, req:['listening','assertive'],
+    desc:'Ask, check, and hear a no — including an unspoken one — as a hard stop.' },
+  { id:'rejection', name:'Handling Rejection', tier:3, req:['resilience','emotion-regulation'],
+    desc:'Take a no gracefully, and give one kindly and unambiguously.' },
+  { id:'partner-assessment', name:'Choosing a Partner', tier:4, req:['dating','decision-making','value-naming'],
+    desc:'Assess values, character and compatibility over infatuation and momentum.' },
+  { id:'relationship-pacing', name:'Pacing a Relationship', tier:4, req:['dating','boundaries'],
+    desc:'Move at a speed you both actually want, and talk about it out loud.' },
+  { id:'breaking-up', name:'Ending a Relationship', tier:4, req:['difficult-conversations','grief'],
+    desc:'End it clearly, kindly and once, without leaving a trail of ambiguity.' },
+]);
+
+addSkills({ cat: 'family', group: 'Partnership' }, [
+  { id:'daily-affection', name:'Everyday Affection', tier:2, req:['empathy'],
+    desc:'Small consistent acts of attention that keep a partnership warm.' },
+  { id:'couple-communication', name:'Communicating as a Couple', tier:4, req:['difficult-conversations','daily-affection'],
+    desc:'Raise a complaint about behaviour without an attack on character.' },
+  { id:'couple-conflict', name:'Fighting Fairly', tier:4, req:['couple-communication','de-escalation'],
+    desc:'Repair attempts, time-outs and never using what they told you against them.' },
+  { id:'shared-finances', name:'Money With a Partner', tier:4, req:['budgeting','couple-communication'],
+    desc:'Agree accounts, contributions and spending limits before it becomes a fight.' },
+  { id:'division-of-labour', name:'Dividing the Housework', tier:4, req:['couple-communication','home-care'],
+    desc:'Make the invisible load visible and split it in a way both people accept.' },
+  { id:'intimacy', name:'Sustaining Intimacy', tier:5, req:['couple-communication','self-disclosure','sex-ed'],
+    desc:'Keep physical and emotional closeness alive across years and life stages.' },
+  { id:'couples-therapy', name:'Getting Help as a Couple', tier:5, req:['couple-conflict','help-seeking'],
+    desc:'Bring in a third party early enough for it to be a repair rather than an autopsy.' },
+  { id:'long-partnership', name:'A Long Partnership', tier:5, req:['couple-conflict','intimacy','shared-finances'],
+    desc:'Stay chosen through illness, children, careers, boredom and change.' },
+  { id:'separation', name:'Separating Well', tier:5, req:['breaking-up','mediation','family-law'],
+    desc:'Unwind a shared life with dignity, especially where children are involved.' },
+]);
+
+addSkills({ cat: 'family', group: 'Babies & Small Children' }, [
+  { id:'baby-care', name:'Newborn Care', tier:3, req:['caregiving','sleep-debugging'],
+    desc:'Feeding, winding, nappies, safe sleep and surviving the first twelve weeks.' },
+  { id:'infant-development', name:'Infant Development', tier:3, req:['baby-care','biology-basics'],
+    desc:'Milestones, attachment and what is worth worrying about versus normal variation.' },
+  { id:'child-feeding', name:'Feeding Children', tier:3, req:['baby-care','nutrition'],
+    desc:'Weaning, fussy phases and building a decent relationship with food.' },
+  { id:'play-with-children', name:'Playing With Children', tier:2, req:['empathy'],
+    desc:'Follow their game, get on the floor, and resist improving it.' },
+  { id:'reading-aloud', name:'Reading Aloud', tier:2, req:['read-fluency','play-with-children'],
+    desc:'Voices, pacing and the nightly habit that does more than almost anything else.' },
+  { id:'toddler-behaviour', name:'Toddler Behaviour', tier:4, req:['infant-development','emotion-regulation'],
+    desc:'Tantrums, transitions and the fact that they are not giving you a hard time.' },
+  { id:'child-sleep', name:'Children’s Sleep', tier:4, req:['baby-care','sleep-debugging'],
+    desc:'Routines, night waking and the trade-offs between the various approaches.' },
+]);
+
+addSkills({ cat: 'family', group: 'Raising Children' }, [
+  { id:'parenting-basics', name:'Parenting Fundamentals', tier:4, req:['toddler-behaviour','boundaries','play-with-children'],
+    desc:'Warmth plus limits — the combination almost every finding points back to.' },
+  { id:'discipline-parenting', name:'Discipline Without Fear', tier:4, req:['parenting-basics','de-escalation'],
+    desc:'Consequences that teach, delivered calmly and consistently.' },
+  { id:'emotional-coaching', name:'Emotion Coaching', tier:4, req:['parenting-basics','emotion-naming'],
+    desc:'Help a child name and sit with a feeling rather than suppressing or exploding it.' },
+  { id:'homework-support', name:'Supporting Schoolwork', tier:4, req:['parenting-basics','tutoring'],
+    desc:'Help without doing it, and back off at exactly the right rate.' },
+  { id:'screen-rules', name:'Screens & Children', tier:4, req:['parenting-basics','digital-minimalism'],
+    desc:'Age-appropriate limits you can actually enforce, and modelling them yourself.' },
+  { id:'teen-parenting', name:'Parenting Teenagers', tier:5, req:['discipline-parenting','difficult-conversations','emotional-coaching'],
+    desc:'Stay connected while handing over autonomy faster than feels comfortable.' },
+  { id:'talking-hard-topics', name:'Talking to Children About Hard Things', tier:5, req:['emotional-coaching','grief'],
+    desc:'Death, sex, divorce, money and the news — age-appropriate and honest.' },
+  { id:'special-needs-parenting', name:'Parenting Additional Needs', tier:5, req:['parenting-basics','health-advocacy','carer-sustainability'],
+    desc:'Diagnosis, provision, advocacy and a family life that works for everyone in it.' },
+  { id:'letting-go', name:'Launching an Adult Child', tier:5, req:['teen-parenting','boundaries'],
+    desc:'Step back into an advisory role and let them make expensive mistakes.' },
+  { id:'co-parenting', name:'Co-Parenting', tier:5, req:['parenting-basics','mediation'],
+    desc:'Present a consistent front with someone you may no longer be with.' },
+]);
+
+addSkills({ cat: 'family', group: 'The Wider Family' }, [
+  { id:'sibling-relations', name:'Sibling Relationships', tier:3, req:['conflict','keeping-in-touch'],
+    desc:'Navigate rivalry, history and adult renegotiation with people who knew you first.' },
+  { id:'in-laws', name:'In-Laws & Extended Family', tier:4, req:['boundaries','cross-cultural'],
+    desc:'Build a workable relationship with people you inherited rather than chose.' },
+  { id:'family-boundaries', name:'Boundaries With Family', tier:4, req:['boundaries','manipulation-defence'],
+    desc:'Hold a limit with the people best equipped to talk you out of it.' },
+  { id:'family-traditions', name:'Family Traditions', tier:3, req:['ritual','hosting'],
+    desc:'Build repeatable rituals that give a family a shared story and calendar.' },
+  { id:'genealogy', name:'Family History & Genealogy', tier:4, req:['primary-sources','interviewing'],
+    desc:'Trace and record where your family came from before the people who know are gone.' },
+  { id:'estrangement', name:'Handling Estrangement', tier:5, req:['family-boundaries','grief','forgiveness'],
+    desc:'Live well with a rupture you cannot fix, or attempt a repair on realistic terms.' },
+  { id:'intergenerational', name:'Bridging Generations', tier:5, req:['in-laws','elder-care','family-traditions'],
+    desc:'Hold a family together across three generations with very different assumptions.' },
+]);
+
+addSkills({ cat: 'family', group: 'Household Life' }, [
+  { id:'shared-living', name:'Living With Others', tier:2, req:['politeness','home-care'],
+    desc:'Housemates: chores, noise, guests and the fridge — agreed rather than assumed.' },
+  { id:'family-meetings', name:'Running a Family Meeting', tier:4, req:['facilitation','division-of-labour'],
+    desc:'A regular half-hour where logistics, money and grievances get handled on purpose.' },
+  { id:'family-calendar', name:'Family Logistics', tier:4, req:['time-management','family-meetings'],
+    desc:'One shared calendar and system that keeps five people’s lives from colliding.' },
+  { id:'pet-care', name:'Keeping a Pet', tier:2, req:['routine','animal-handling'],
+    desc:'Feeding, exercise, vet care and the ten-year commitment nobody costs out.' },
+  { id:'household-leadership', name:'Running a Household', tier:5, req:['project-planning','cooking-advanced','emergency'],
+    desc:'Keep a home, its people and its logistics running through anything.' },
+]);
+
+addSkills({ cat: 'family', group: 'Milestones & Transitions' }, [
+  { id:'wedding-planning', name:'Planning a Wedding', tier:4, req:['project-planning','budgeting','in-laws'],
+    desc:'Guest lists, budget and family politics — a project with unusually high stakes.' },
+  { id:'new-parenthood', name:'Becoming Parents', tier:4, req:['baby-care','couple-communication'],
+    desc:'Protect the relationship through the year that puts the most strain on it.' },
+  { id:'blended-family', name:'Blending Families', tier:5, req:['co-parenting','family-boundaries','patience-craft'],
+    desc:'Step-parenting at the pace the children set, not the adults.' },
+  { id:'adoption-fostering', name:'Adoption & Fostering', tier:5, req:['parenting-basics','bureaucracy','emotional-coaching'],
+    desc:'Assessment, attachment, contact and parenting a child with a history.' },
+  { id:'empty-nest', name:'The Empty Nest', tier:5, req:['letting-go','life-design'],
+    desc:'Rebuild a couple and a self after two decades organised around children.' },
+  { id:'funerals', name:'Arranging a Funeral', tier:4, req:['grief','bureaucracy','toasts'],
+    desc:'Registration, arrangements and a service, in a week where you are least able.' },
+  { id:'bereavement-admin', name:'Sorting Out an Estate', tier:5, req:['wills','funerals','record-keeping'],
+    desc:'Probate, accounts, belongings and siblings — grief with a spreadsheet attached.' },
+]);
+
+addSkills({ cat: 'family', group: 'Family Culture' }, [
+  { id:'family-values', name:'Naming Family Values', tier:4, req:['value-naming','family-meetings'],
+    desc:'Decide together what this household is for, and let it settle arguments.' },
+  { id:'family-storytelling', name:'Telling Family Stories', tier:4, req:['storytelling','genealogy'],
+    desc:'Pass on where you came from so children have a story larger than themselves.' },
+  { id:'family-food', name:'Eating Together', tier:4, req:['meal-prep','family-calendar'],
+    desc:'Defend the shared meal as the piece of infrastructure it actually is.' },
+  { id:'family-holidays', name:'Family Holidays', tier:4, req:['family-travel','family-values'],
+    desc:'Plan time away that works for everyone, including the person organising it.' },
+  { id:'digital-family', name:'Family Digital Life', tier:4, req:['screen-rules','privacy-management'],
+    desc:'Devices, photos, passwords and what you post about people who cannot consent.' },
+]);
+
+addSkills({ cat: 'family', group: 'Being a Family Member' }, [
+  { id:'showing-up', name:'Showing Up', tier:1,
+    desc:'Be at the birthday, the hospital and the funeral — most of family is attendance.' },
+  { id:'family-chores', name:'Doing Your Share at Home', tier:1,
+    desc:'Notice what needs doing and do it without being asked or thanked.' },
+  { id:'remembering-dates', name:'Remembering the Dates', tier:1,
+    desc:'Birthdays and anniversaries in a system, not in your memory.' },
+  { id:'family-calls', name:'Staying in Touch With Family', tier:2, req:['phone-calls','showing-up'],
+    desc:'The regular call you make because it matters, not because you feel like it.' },
+  { id:'family-photos', name:'Keeping Family Records', tier:2, req:['file-org','remembering-dates'],
+    desc:'Photos, documents and video organised so they survive and can be found.' },
+  { id:'listening-to-elders', name:'Listening to Older Relatives', tier:2, req:['listening','showing-up'],
+    desc:'Ask the questions and record the answers while there is still someone to ask.' },
+  { id:'household-negotiation', name:'Negotiating at Home', tier:3, req:['family-chores','asking'],
+    desc:'Sort out who does what without it becoming a standing grievance.' },
+  { id:'family-conflict', name:'Family Arguments', tier:3, req:['de-escalation','sibling-relations'],
+    desc:'Fight about the actual thing rather than the last fifteen years of it.' },
+]);
+
+addSkills({ cat: 'family', group: 'Care & Attention' }, [
+  { id:'quality-time', name:'Giving Real Attention', tier:2, req:['single-tasking','empathy'],
+    desc:'Put the phone in another room and be entirely with one person for an hour.' },
+  { id:'noticing-changes', name:'Noticing When Someone Is Struggling', tier:3, req:['quality-time','mental-health-literacy'],
+    desc:'Spot the withdrawal or the change in someone close and ask about it.' },
+  { id:'sibling-care', name:'Looking After Siblings', tier:2, req:['play-with-children','family-chores'],
+    desc:'Supervise, entertain and keep a younger child safe for an afternoon.' },
+  { id:'grandparenting', name:'Grandparenting', tier:5, req:['letting-go','play-with-children','family-boundaries'],
+    desc:'Delight in them, back their parents up, and keep your opinions mostly to yourself.' },
+  { id:'godparenting', name:'Being a Trusted Adult', tier:4, req:['quality-time','mentoring'],
+    desc:'Be a non-parent adult a child can talk to, consistently, for twenty years.' },
+]);
+
+addSkills({ cat: 'family', group: 'Hard Conversations at Home' }, [
+  { id:'money-talk-family', name:'Talking to Family About Money', tier:4, req:['talking-about-money','family-boundaries'],
+    desc:'Inheritance, care costs and lending, raised before a crisis forces it.' },
+  { id:'care-conversations', name:'Talking About Future Care', tier:5, req:['elder-care','wills','difficult-conversations'],
+    desc:'What they want, who decides, and where the documents are — while everyone is well.' },
+  { id:'family-apology', name:'Apologising Within a Family', tier:4, req:['apologising','family-conflict'],
+    desc:'Say it to someone who remembers every previous version of you.' },
+  { id:'accepting-help', name:'Accepting Help From Family', tier:3, req:['asking','self-honesty'],
+    desc:'Take the offer without the ledger, the guilt or the counter-offer.' },
+  { id:'family-secrets', name:'Handling Family Secrets', tier:5, req:['discretion','genealogy','difficult-conversations'],
+    desc:'Decide what to tell, to whom, and when the concealment is doing the damage.' },
+]);

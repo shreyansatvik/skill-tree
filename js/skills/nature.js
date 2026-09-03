@@ -1,0 +1,157 @@
+/* ==================================================================
+   Nature & Sustainability — knowing the living world, growing things,
+   and living in a way the place can carry.
+================================================================== */
+
+addSkills({ cat: 'nature', group: 'Knowing What You Are Looking At' }, [
+  { id:'nature-noticing', name:'Noticing Nature', tier:1,
+    desc:'Look up and actually see the birds, trees and weather you walk past daily.' },
+  { id:'plant-id', name:'Plant Identification', tier:3, req:['nature-noticing','observation'],
+    desc:'Use a key, learn families, and reliably name what is growing near you.' },
+  { id:'tree-id', name:'Tree Identification', tier:2, req:['nature-noticing'],
+    desc:'Name the common trees by leaf, bark and silhouette, in winter as well.' },
+  { id:'bird-id', name:'Birdwatching', tier:3, req:['nature-noticing','listening-music'],
+    desc:'Identify by shape, behaviour and song, not just by a good view.' },
+  { id:'fungi-id', name:'Fungi Identification', tier:4, req:['plant-id','microbiology'],
+    desc:'Spore prints, habitat and the deadly lookalikes — certainty or nothing.' },
+  { id:'wildlife-id', name:'Wildlife Identification', tier:3, req:['nature-noticing','observation'],
+    desc:'Mammals, reptiles and amphibians by sight, sign and habitat.' },
+  { id:'entomology', name:'Insects & Invertebrates', tier:4, req:['wildlife-id','biology-basics'],
+    desc:'Orders, life cycles and the small things everything else depends on.' },
+  { id:'nature-recording', name:'Recording & Citizen Science', tier:4, req:['plant-id','bird-id','data-analysis'],
+    desc:'Submit accurate records that add up to a dataset somebody can actually use.' },
+  { id:'nature-journal', name:'Nature Journalling', tier:3, req:['nature-noticing','sketching'],
+    desc:'Draw, date and describe what you see until you start noticing patterns.' },
+]);
+
+addSkills({ cat: 'nature', group: 'Growing Things' }, [
+  { id:'houseplants', name:'Keeping Plants Alive', tier:1,
+    desc:'Light, water and drainage — the three things nearly everyone gets wrong.' },
+  { id:'gardening-basics', name:'Gardening Basics', tier:3, req:['houseplants','soil-science'],
+    desc:'Soil, season, planting depth and watering that encourages deep roots.' },
+  { id:'propagation', name:'Propagation', tier:3, req:['gardening-basics'],
+    desc:'Seed, cutting, division and grafting — more plants for nothing.' },
+  { id:'vegetable-growing', name:'Growing Vegetables', tier:3, req:['gardening-basics','seasonality'],
+    desc:'Succession, spacing and rotation that produce food rather than a lot of leaves.' },
+  { id:'fruit-growing', name:'Fruit & Orchard', tier:4, req:['vegetable-growing','pruning'],
+    desc:'Rootstocks, pollination partners and the patience of a five-year payoff.' },
+  { id:'pruning', name:'Pruning & Training', tier:3, req:['gardening-basics','sharpening'],
+    desc:'Cut in the right place at the right time so the plant does what you want.' },
+  { id:'composting', name:'Composting', tier:3, req:['gardening-basics','waste-recycling'],
+    desc:'Balance greens and browns, keep it aerated, and turn waste into soil.' },
+  { id:'seed-saving', name:'Seed Saving', tier:4, req:['vegetable-growing','genetics'],
+    desc:'Select, dry and store seed that comes true, year after year.' },
+  { id:'garden-design', name:'Garden Design', tier:4, req:['gardening-basics','design'],
+    desc:'Structure, succession and sight lines — a garden that works in February too.' },
+  { id:'polytunnel', name:'Season Extension', tier:4, req:['vegetable-growing','weather-reading'],
+    desc:'Cloches, tunnels and glass to grow for two more months at each end.' },
+  { id:'permaculture', name:'Permaculture & Food Forests', tier:5, req:['garden-design','ecology','composting'],
+    desc:'Design a productive system that mostly maintains itself over decades.' },
+  { id:'smallholding', name:'Running a Smallholding', tier:5, req:['permaculture','livestock','operations'],
+    desc:'Land, animals, crops and cash flow balanced across a whole year.' },
+]);
+
+addSkills({ cat: 'nature', group: 'Animals' }, [
+  { id:'animal-handling', name:'Handling Animals', tier:2, req:['body-language','emotion-regulation'],
+    desc:'Approach, restrain and calm an animal without frightening either of you.' },
+  { id:'dog-training', name:'Dog Training', tier:3, req:['animal-handling','habits'],
+    desc:'Recall, loose lead and consistent reinforcement everyone in the house uses.' },
+  { id:'animal-health', name:'Animal Health Care', tier:4, req:['animal-handling','symptom-literacy'],
+    desc:'Spot illness early, give medication, and know what is a vet emergency.' },
+  { id:'beekeeping', name:'Beekeeping', tier:5, req:['entomology','animal-handling','seasonality'],
+    desc:'Inspections, disease, swarming and taking honey without killing the colony.' },
+  { id:'livestock', name:'Keeping Livestock', tier:5, req:['animal-health','animal-handling','compliance'],
+    desc:'Chickens, goats or sheep — housing, feed, welfare and the paperwork.' },
+  { id:'wildlife-gardening', name:'Gardening for Wildlife', tier:3, req:['gardening-basics','ecology'],
+    desc:'Food, water, cover and continuity so something actually moves in.' },
+]);
+
+addSkills({ cat: 'nature', group: 'Living Lightly' }, [
+  { id:'seasonality', name:'Living by the Season', tier:3, req:['nature-noticing','produce-selection'],
+    desc:'Know what is in season and let that shape what you eat and when you do things.' },
+  { id:'ethical-consumption', name:'Buying Less, Better', tier:3, req:['comparison-shopping','philosophy-of-life'],
+    desc:'Cost per use, repairability and supply chains as a routine purchase filter.' },
+  { id:'repair-culture', name:'Repair Over Replace', tier:4, req:['repair','ethical-consumption'],
+    desc:'Default to fixing it, and know where the repair café and the spares are.' },
+  { id:'carbon-literacy', name:'Carbon Literacy', tier:4, req:['energy-literacy','estimation'],
+    desc:'Rank your own emissions honestly so effort goes where the tonnes are.' },
+  { id:'low-carbon-living', name:'Cutting Your Footprint', tier:5, req:['carbon-literacy','sustainable-home','seasonality'],
+    desc:'Heating, transport, diet and flying changed in the order that actually matters.' },
+  { id:'environmental-advocacy', name:'Environmental Action', tier:5, req:['carbon-literacy','campaigning','climate-science'],
+    desc:'Work on the systemic changes that dwarf anything you do in your own kitchen.' },
+  { id:'conservation-work', name:'Practical Conservation', tier:4, req:['ecology','volunteering','axe-work'],
+    desc:'Coppicing, scrub clearance, surveys and habitat work that measurably helps.' },
+  { id:'rewilding', name:'Rewilding & Land Management', tier:5, req:['conservation-work','ecology','governance'],
+    desc:'Manage land for succession and species over decades, with the neighbours on side.' },
+]);
+
+addSkills({ cat: 'nature', group: 'Growing Deeper' }, [
+  { id:'container-growing', name:'Growing in Small Spaces', tier:3, req:['houseplants','gardening-basics'],
+    desc:'Balconies, windowsills and pots — soil volume, water and light as the constraints.' },
+  { id:'indoor-growing', name:'Indoor & Hydroponic Growing', tier:4, req:['container-growing','electricity-basics'],
+    desc:'Light spectrum, nutrient solution and humidity in a controlled environment.' },
+  { id:'plant-diagnosis', name:'Diagnosing Sick Plants', tier:4, req:['plant-id','soil-science'],
+    desc:'Distinguish pest, disease, deficiency and simple bad watering.' },
+  { id:'organic-pest', name:'Managing Pests Without Poison', tier:4, req:['plant-diagnosis','ecology'],
+    desc:'Predators, barriers, timing and tolerance of some damage.' },
+  { id:'mushroom-growing', name:'Growing Mushrooms', tier:4, req:['microbiology','fungi-id'],
+    desc:'Sterile technique, substrate and fruiting conditions in a spare room.' },
+  { id:'hedgerow-craft', name:'Hedges, Trees & Woodland', tier:5, req:['pruning','conservation-work','axe-work'],
+    desc:'Plant, lay and coppice — managing woody growth on a decades-long cycle.' },
+  { id:'water-harvesting', name:'Harvesting & Saving Water', tier:4, req:['hydrology','gardening-basics'],
+    desc:'Butts, greywater and irrigation that gets through a dry summer.' },
+]);
+
+addSkills({ cat: 'nature', group: 'The Wider Picture' }, [
+  { id:'local-ecology', name:'Knowing Your Local Patch', tier:4, req:['plant-id','bird-id','nature-journal'],
+    desc:'Watch one square kilometre closely enough to notice a year’s worth of change.' },
+  { id:'landscape-history', name:'Reading a Landscape', tier:4, req:['geology','historical-context','tree-id'],
+    desc:'See the field boundaries, mining and drainage that made a view what it is.' },
+  { id:'environmental-policy', name:'Environmental Policy', tier:5, req:['policy-reading','climate-science'],
+    desc:'Targets, offsets and regulation, and which of them actually cut emissions.' },
+  { id:'circular-economy', name:'Circular Economy Thinking', tier:5, req:['repair-culture','systems-thinking','design-for-manufacture'],
+    desc:'Design and buy for reuse, repair and recovery instead of a single trip to landfill.' },
+  { id:'green-careers', name:'Working in Sustainability', tier:5, req:['carbon-literacy','career-planning','impact-measurement'],
+    desc:'Find the roles where your effort moves real tonnes rather than reports.' },
+]);
+
+addSkills({ cat: 'nature', group: 'Getting Outside the Door' }, [
+  { id:'window-nature', name:'Nature Where You Live', tier:1,
+    desc:'Learn the ten commonest birds, trees and weeds on your own street.' },
+  { id:'feeding-birds', name:'Feeding & Watching Birds', tier:2, req:['window-nature'],
+    desc:'Right food, clean feeders and a window seat — the easiest way in.' },
+  { id:'seasonal-noticing', name:'Marking the Seasons', tier:2, req:['window-nature','nature-noticing'],
+    desc:'First swallow, last leaf, longest day — a calendar the natural world keeps.' },
+  { id:'nature-with-children', name:'Nature With Children', tier:3, req:['seasonal-noticing','play-with-children'],
+    desc:'Ponds, bugs and mud — curiosity encouraged rather than tidily managed.' },
+  { id:'growing-from-scraps', name:'Growing From Kitchen Scraps', tier:2, req:['houseplants'],
+    desc:'Herbs, spring onions and a windowsill that produces something edible.' },
+  { id:'wildlife-rescue', name:'Injured & Orphaned Wildlife', tier:4, req:['animal-handling','wildlife-id'],
+    desc:'When to intervene, when to leave it, and who to call if you do.' },
+]);
+
+addSkills({ cat: 'nature', group: 'Producing Your Own' }, [
+  { id:'allotment', name:'Running an Allotment', tier:4, req:['vegetable-growing','composting','seasonality'],
+    desc:'A plot kept productive across a whole year with an hour or two a week.' },
+  { id:'preserving-harvest', name:'Handling a Glut', tier:4, req:['allotment','canning','drying'],
+    desc:'Twenty kilos of courgettes turned into food you will still eat in January.' },
+  { id:'chickens', name:'Keeping Chickens', tier:4, req:['animal-health','pest-control'],
+    desc:'Housing, predators, feed and the twelve eggs a week you did not plan for.' },
+  { id:'self-sufficiency', name:'Growing a Real Share of Your Food', tier:5, req:['allotment','preserving-harvest','permaculture'],
+    desc:'Plan, plant and store enough to matter, and be honest about how much that is.' },
+  { id:'community-garden', name:'Running a Community Growing Space', tier:5, req:['allotment','community','governance'],
+    desc:'Shared plots, rotas and the politics of who took the last of the raspberries.' },
+]);
+
+addSkills({ cat: 'nature', group: 'Living With Animals' }, [
+  { id:'choosing-a-pet', name:'Choosing a Pet', tier:3, req:['animal-handling','budgeting'],
+    desc:'Match species and breed to your actual life, space and next fifteen years.' },
+  { id:'pet-training', name:'Training Any Animal', tier:4, req:['dog-training','habits'],
+    desc:'Reinforcement, timing and consistency applied to whatever you live with.' },
+  { id:'pet-end-of-life', name:'A Pet’s End of Life', tier:4, req:['animal-health','grief'],
+    desc:'Quality-of-life judgement, euthanasia decisions and grieving an animal properly.' },
+  { id:'wildlife-coexistence', name:'Living Alongside Wildlife', tier:4, req:['wildlife-id','pest-control'],
+    desc:'Foxes, squirrels, badgers and gulls managed without poison or panic.' },
+  { id:'animal-welfare', name:'Animal Welfare', tier:4, req:['animal-health','ethical-dilemmas'],
+    desc:'Five freedoms applied to pets, farms and what you buy.' },
+]);

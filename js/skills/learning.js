@@ -1,0 +1,148 @@
+/* ==================================================================
+   Learning & Teaching — how to acquire a skill on purpose, and how
+   to get one into somebody else's head.
+================================================================== */
+
+addSkills({ cat: 'learning', group: 'How to Study' }, [
+  { id:'attention-in-class', name:'Attending & Following', tier:1,
+    desc:'Track a lesson in real time and notice the moment you have lost the thread.' },
+  { id:'study-systems', name:'Study Systems & Spaced Repetition', tier:2, req:['notetaking'],
+    desc:'Plan review over time so material actually sticks instead of being crammed.' },
+  { id:'active-recall', name:'Active Recall', tier:2, req:['notetaking'],
+    desc:'Test yourself blank-page instead of rereading; the difference between hours and weeks.' },
+  { id:'memory-technique', name:'Memory Techniques', tier:3, req:['active-recall'],
+    desc:'Loci, chunking and elaboration — deliberately engineering things into memory.' },
+  { id:'interleaving', name:'Interleaving & Desirable Difficulty', tier:3, req:['study-systems','active-recall'],
+    desc:'Mix problem types and make practice harder on purpose because it works better.' },
+  { id:'exam-technique', name:'Exam Technique', tier:3, req:['active-recall','time-awareness'],
+    desc:'Read the question, allocate minutes to marks, and leave nothing blank.' },
+  { id:'exam-nerves', name:'Performing Under Exam Pressure', tier:3, req:['exam-technique','emotion-regulation'],
+    desc:'Keep the recall you have when adrenaline is trying to take it away.' },
+  { id:'note-systems', name:'A Personal Knowledge System', tier:4, req:['notetaking','file-org','summarising'],
+    desc:'Notes that compound: linked, revisited, and actually used to write and decide.' },
+  { id:'learning-how-to-learn', name:'Learning How You Learn', tier:4, req:['interleaving','metacognition'],
+    desc:'Know your own acquisition curve well enough to plan a skill in advance.' },
+]);
+
+addSkills({ cat: 'learning', group: 'Acquiring Skills' }, [
+  { id:'deliberate-practice', name:'Deliberate Practice', tier:3, req:['feedback','discipline'],
+    desc:'Practise the specific thing you are bad at, with immediate correction, not the whole.' },
+  { id:'drilling', name:'Drilling Fundamentals', tier:3, req:['discipline'],
+    desc:'Do the boring rep thousands of times until it stops needing attention.' },
+  { id:'skill-decomposition', name:'Breaking a Skill Down', tier:3, req:['deliberate-practice','mental-models'],
+    desc:'Split a competence into sub-skills you can practise and measure separately.' },
+  { id:'plateau-breaking', name:'Breaking Plateaus', tier:4, req:['deliberate-practice','failure-processing'],
+    desc:'Diagnose why progress stopped and change the constraint rather than the effort.' },
+  { id:'apprenticeship', name:'Learning From a Master', tier:4, req:['deliberate-practice','feedback'],
+    desc:'Attach yourself to someone excellent and extract what they cannot articulate.' },
+  { id:'self-directed', name:'Self-Directed Learning', tier:4, req:['learning-how-to-learn','source-search'],
+    desc:'Build your own curriculum for a field nobody is going to teach you.' },
+  { id:'rapid-skill', name:'Rapid Skill Acquisition', tier:5, req:['skill-decomposition','plateau-breaking','self-directed'],
+    desc:'Take an unfamiliar skill to genuinely useful inside a few focused weeks.' },
+  { id:'transfer', name:'Transferring Skill Between Domains', tier:5, req:['rapid-skill','mental-models'],
+    desc:'Notice the shared structure and carry expertise sideways into a new field.' },
+]);
+
+addSkills({ cat: 'learning', group: 'Navigating Education' }, [
+  { id:'school-navigation', name:'Navigating a School System', tier:2, req:['attention-in-class'],
+    desc:'Options, streams, deadlines and who to ask — the meta-game around the lessons.' },
+  { id:'applications', name:'Applications & Admissions', tier:4, req:['persuasive-writing','school-navigation'],
+    desc:'Personal statements, references and deadlines for a place you actually want.' },
+  { id:'scholarships', name:'Funding Your Education', tier:4, req:['applications','budgeting'],
+    desc:'Scholarships, bursaries, loans and the true cost of each option over ten years.' },
+  { id:'course-selection', name:'Choosing What to Study', tier:3, req:['school-navigation','decision-making'],
+    desc:'Match subject, institution and format to what you actually want to be able to do.' },
+  { id:'group-study', name:'Studying With Others', tier:2, req:['study-systems','listening'],
+    desc:'A study group that raises everyone rather than becoming a social hour.' },
+  { id:'dissertation', name:'Surviving a Dissertation', tier:5, req:['thesis','project-planning','consistency'],
+    desc:'Structure, supervision and stamina for a very long piece of solo work.' },
+  { id:'credential-strategy', name:'Credentials vs. Capability', tier:4, req:['course-selection','career-planning'],
+    desc:'Judge when a qualification is actually the unlock and when it is expensive signalling.' },
+  { id:'lifelong-learning', name:'Lifelong Learning', tier:5, req:['self-directed','consistency','credential-strategy'],
+    desc:'Keep acquiring serious new capability decades after anyone required it of you.' },
+]);
+
+addSkills({ cat: 'learning', group: 'Teaching' }, [
+  { id:'explaining', name:'Explaining Something Simply', tier:3, req:['summarising','empathy'],
+    desc:'Find the analogy and the order that makes an idea land for this listener.' },
+  { id:'demonstrating', name:'Demonstrating a Skill', tier:3, req:['explaining'],
+    desc:'Show, narrate and slow down the parts a learner cannot see you doing.' },
+  { id:'questioning-technique', name:'Teaching by Questioning', tier:3, req:['explaining','listening'],
+    desc:'Ask the question that makes the learner find it, instead of telling them.' },
+  { id:'lesson-planning', name:'Lesson Planning', tier:4, req:['explaining','project-planning'],
+    desc:'Objectives, sequence, practice and a check that they actually got it.' },
+  { id:'classroom-management', name:'Classroom Management', tier:4, req:['lesson-planning','assertive','conflict'],
+    desc:'Hold attention and order in a room of thirty without spending the lesson on it.' },
+  { id:'assessment', name:'Assessment & Marking', tier:4, req:['lesson-planning','feedback'],
+    desc:'Design questions that reveal understanding, and mark them fairly and fast.' },
+  { id:'differentiation', name:'Teaching Mixed Ability', tier:4, req:['assessment','empathy'],
+    desc:'Keep the fastest stretched and the slowest included in the same forty minutes.' },
+  { id:'curriculum-design', name:'Curriculum Design', tier:5, req:['assessment','lesson-planning','systems-thinking'],
+    desc:'Sequence a whole year or programme so each piece earns its place.' },
+  { id:'teaching', name:'Teaching & Lecturing', tier:5, req:['academic-writing','public-speaking'],
+    desc:'Take a hard idea apart and rebuild it inside someone else’s head.' },
+  { id:'tutoring', name:'One-to-One Tutoring', tier:4, req:['questioning-technique','differentiation'],
+    desc:'Diagnose exactly where an individual is stuck and fix that, not the syllabus.' },
+  { id:'training-design', name:'Designing Training', tier:5, req:['curriculum-design','facilitation'],
+    desc:'Build workplace training adults will finish and then actually use.' },
+  { id:'educational-leadership', name:'Educational Leadership', tier:5, req:['curriculum-design','leadership','assessment'],
+    desc:'Run a department or school: standards, staff development and results.' },
+]);
+
+addSkills({ cat: 'learning', group: 'Tools for Learning' }, [
+  { id:'flashcards', name:'Building Good Flashcards', tier:3, req:['study-systems','summarising'],
+    desc:'Atomic, unambiguous cards — most people fail spaced repetition at authoring.' },
+  { id:'mind-mapping', name:'Mapping Knowledge', tier:2, req:['notetaking'],
+    desc:'Draw the structure of a topic so the connections are visible, not just the facts.' },
+  { id:'feynman-technique', name:'Explaining to Find the Gap', tier:3, req:['explaining','active-recall'],
+    desc:'Teach it simply, notice where you stumble, and go back to exactly there.' },
+  { id:'problem-sets', name:'Working Through Problems', tier:3, req:['drilling','failure-processing'],
+    desc:'Do the exercises, fully, without looking at the answer first.' },
+  { id:'learning-from-books', name:'Learning From a Textbook', tier:3, req:['marginalia','problem-sets'],
+    desc:'Work a technical book properly rather than reading it like a novel.' },
+  { id:'learning-from-video', name:'Learning From Video & Courses', tier:2, req:['notetaking','active-recall'],
+    desc:'Pause, take notes and practise — resist the illusion of understanding.' },
+  { id:'learning-with-ai', name:'Learning With AI', tier:4, req:['prompting','feynman-technique'],
+    desc:'Use a model as a tutor and a sparring partner, while verifying what it tells you.' },
+]);
+
+addSkills({ cat: 'learning', group: 'Learning in Life' }, [
+  { id:'learning-on-the-job', name:'Learning on the Job', tier:3, req:['onboarding','question-asking-social'],
+    desc:'Extract knowledge from busy colleagues without becoming an interruption.' },
+  { id:'reading-groups', name:'Running a Reading Group', tier:4, req:['facilitation','group-study'],
+    desc:'Keep six people reading the same hard book to the same schedule.' },
+  { id:'teaching-to-learn', name:'Teaching to Learn', tier:4, req:['tutoring','feynman-technique'],
+    desc:'Take on a teaching commitment specifically to force your own understanding.' },
+  { id:'learning-community', name:'Finding a Learning Community', tier:4, req:['networking','self-directed'],
+    desc:'Locate the people already doing the thing and get into the room with them.' },
+  { id:'unlearning', name:'Unlearning', tier:5, req:['metacognition','humility'],
+    desc:'Notice and dismantle a model you have used for years that is now wrong.' },
+]);
+
+addSkills({ cat: 'learning', group: 'Getting Started' }, [
+  { id:'concentrating-to-study', name:'Sitting Down to Work', tier:1,
+    desc:'Start the session on time in a place that has nothing else to offer.' },
+  { id:'study-space', name:'A Place to Work', tier:1,
+    desc:'One consistent, uncluttered spot that means work when you sit in it.' },
+  { id:'homework-habit', name:'Doing the Work Set', tier:2, req:['concentrating-to-study','routine'],
+    desc:'Same time, same place, done before the evening rather than during it.' },
+  { id:'asking-for-help-learning', name:'Asking a Teacher', tier:2, req:['questioning','articulation'],
+    desc:'Say precisely what you do not understand, which is most of the work.' },
+  { id:'revision-planning', name:'Planning Revision', tier:3, req:['study-systems','calendar-discipline'],
+    desc:'Work backwards from the exam with topics, gaps and slack built in.' },
+  { id:'past-papers', name:'Using Past Papers', tier:3, req:['exam-technique','active-recall'],
+    desc:'Do them timed, mark them honestly, and study the mark scheme.' },
+]);
+
+addSkills({ cat: 'learning', group: 'Teaching Practice' }, [
+  { id:'teaching-adults', name:'Teaching Adults', tier:5, req:['training-design','facilitation'],
+    desc:'Respect their experience, make it immediately useful, and keep it short.' },
+  { id:'teaching-online', name:'Teaching Online', tier:5, req:['lesson-planning','video-call-presence','screen-recording'],
+    desc:'Hold attention through a screen and build in interaction that actually happens.' },
+  { id:'marking-fast', name:'Marking at Volume', tier:5, req:['assessment','working-fast'],
+    desc:'Consistent, useful feedback on thirty scripts without losing your evening.' },
+  { id:'teaching-behaviour', name:'Behaviour & Motivation', tier:5, req:['classroom-management','emotional-coaching'],
+    desc:'Address the reason a student has disengaged rather than the symptom.' },
+  { id:'parent-communication', name:'Talking to Parents', tier:5, req:['difficult-conversations','assessment'],
+    desc:'Give an honest account of a child to the people least able to hear it neutrally.' },
+]);

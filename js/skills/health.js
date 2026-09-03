@@ -1,0 +1,251 @@
+/* ==================================================================
+   Health & Medical — keeping the body running, working with the
+   medical system, and looking after other people's health too.
+================================================================== */
+
+addSkills({ cat: 'health', group: 'Daily Body Care' }, [
+  { id:'routine', name:'Daily Routine & Hygiene', tier:1,
+    desc:'A reliable morning and evening you run without negotiating with yourself.' },
+  { id:'handwashing', name:'Hand & Respiratory Hygiene', tier:1,
+    desc:'The unglamorous habits that stop most transmissible illness in a household.' },
+  { id:'dental-care', name:'Dental Care', tier:1,
+    desc:'Brushing, flossing and checkups that keep teeth for a whole lifetime.' },
+  { id:'skin-care', name:'Skin Care', tier:1,
+    desc:'Cleansing, moisture, sun protection, and spotting a mole that has changed.' },
+  { id:'hydration', name:'Hydration', tier:1,
+    desc:'Drink enough, notice dehydration early, and know when water is not enough.' },
+  { id:'foot-care', name:'Foot & Nail Care', tier:2, req:['routine'],
+    desc:'Fit, blisters, fungal infection and the checks a diabetic foot needs.' },
+  { id:'posture-health', name:'Ergonomics & Desk Health', tier:2, req:['posture'],
+    desc:'Set a chair, screen and keyboard so eight hours does not cost you a neck.' },
+  { id:'eye-care', name:'Eye Care', tier:2, req:['routine'],
+    desc:'Screen breaks, prescriptions, and the symptoms that mean go today, not next month.' },
+  { id:'hearing-care', name:'Hearing Protection', tier:2, req:['routine'],
+    desc:'Volume, plugs and exposure limits — hearing loss is one-way.' },
+  { id:'voice-care', name:'Voice Care', tier:3, req:['hydration','public-speaking'],
+    desc:'Warm up, hydrate and pace a voice that has to work all day.' },
+]);
+
+addSkills({ cat: 'health', group: 'Fitness & Recovery' }, [
+  { id:'movement-habit', name:'Moving Every Day', tier:1,
+    desc:'Build enough incidental movement into an ordinary day that sitting stops winning.' },
+  { id:'body-weight-awareness', name:'Body Composition Literacy', tier:2, req:['self-awareness'],
+    desc:'Read weight, waist and body-fat numbers without moralising or panicking.' },
+  { id:'warmup-cooldown', name:'Warm-Up & Cool-Down', tier:2, req:['movement-habit'],
+    desc:'Prepare tissue for load and bring the heart rate down properly afterwards.' },
+  { id:'injury-prevention', name:'Injury Prevention', tier:3, req:['warmup-cooldown','mobility'],
+    desc:'Load management, sleep, technique and honesty about niggles.' },
+  { id:'rehab', name:'Rehab & Physio Compliance', tier:3, req:['injury-prevention','discipline'],
+    desc:'Do the boring prescribed exercises daily for the ten weeks they take to work.' },
+  { id:'pain-management', name:'Living With Pain', tier:4, req:['rehab','anxiety-skills'],
+    desc:'Pacing, graded exposure and the psychology of persistent pain.' },
+  { id:'recovery-protocol', name:'Recovery Protocols', tier:4, req:['injury-prevention','sleep-debugging'],
+    desc:'Sleep, protein, deload weeks and heat/cold — what actually speeds recovery.' },
+]);
+
+addSkills({ cat: 'health', group: 'Understanding Your Body' }, [
+  { id:'anatomy-basics', name:'Basic Anatomy', tier:2, req:['body-signals'],
+    desc:'Name the major organs, bones and systems and roughly what each one does.' },
+  { id:'vital-signs', name:'Taking Vital Signs', tier:2, req:['numeracy'],
+    desc:'Pulse, temperature, blood pressure, oxygen saturation — and what normal looks like.' },
+  { id:'symptom-literacy', name:'Symptom Literacy', tier:3, req:['anatomy-basics','vital-signs'],
+    desc:'Tell self-limiting from serious, and know the red flags that mean emergency.' },
+  { id:'lab-results', name:'Reading Lab Results', tier:3, req:['vital-signs','statistics'],
+    desc:'Reference ranges, trends over time, and why one odd value is usually noise.' },
+  { id:'body-systems', name:'How Body Systems Interact', tier:4, req:['anatomy-basics','symptom-literacy'],
+    desc:'Follow how sleep, stress, gut, hormones and immunity actually feed back on each other.' },
+  { id:'genetics-health', name:'Family History & Genetic Risk', tier:4, req:['lab-results','probabilistic-thinking'],
+    desc:'Map inherited risk, interpret a genetic test, and act on it proportionately.' },
+]);
+
+addSkills({ cat: 'health', group: 'Using the Health System' }, [
+  { id:'gp-registration', name:'Registering & Booking Care', tier:1,
+    desc:'Get on a doctor’s list, book appointments, and know which service to use when.' },
+  { id:'health-records', name:'Keeping Health Records', tier:2, req:['gp-registration','file-org'],
+    desc:'Vaccinations, allergies, medications and results in one place you can find fast.' },
+  { id:'doctor-conversation', name:'Talking to a Doctor', tier:3, req:['symptom-literacy','assertive'],
+    desc:'Arrive with a timeline and three questions, and leave understanding the plan.' },
+  { id:'second-opinion', name:'Seeking a Second Opinion', tier:3, req:['doctor-conversation'],
+    desc:'Ask for one without burning the relationship, and know when it is warranted.' },
+  { id:'health-insurance', name:'Health Insurance & Costs', tier:3, req:['insurance','gp-registration'],
+    desc:'Coverage, excess, networks, prior authorisation and disputing a bill.' },
+  { id:'medical-research', name:'Reading Medical Evidence', tier:4, req:['critical-reading','statistics','symptom-literacy'],
+    desc:'Trial design, absolute vs. relative risk, and why the headline is usually wrong.' },
+  { id:'shared-decision', name:'Shared Medical Decisions', tier:4, req:['medical-research','doctor-conversation','decision-making'],
+    desc:'Weigh treatment options against your own values, not just survival curves.' },
+  { id:'health-advocacy', name:'Advocating for a Patient', tier:5, req:['shared-decision','negotiation','caregiving'],
+    desc:'Get someone else the care they need through a system that is not helping.' },
+]);
+
+addSkills({ cat: 'health', group: 'Prevention & Screening' }, [
+  { id:'vaccination', name:'Vaccination Literacy', tier:2, req:['gp-registration'],
+    desc:'Know your schedule, boosters and travel jabs, and why they are timed that way.' },
+  { id:'screening', name:'Screening & Checkups', tier:3, req:['vaccination','health-records'],
+    desc:'Which screens apply at your age and risk, and turning up for them.' },
+  { id:'self-examination', name:'Self-Examination', tier:2, req:['anatomy-basics'],
+    desc:'Skin, breast and testicular checks done regularly enough to catch a change.' },
+  { id:'risk-reduction', name:'Personal Risk Reduction', tier:4, req:['screening','genetics-health'],
+    desc:'Rank your actual risks and spend effort on the ones with real expected payoff.' },
+  { id:'longevity', name:'Healthspan Planning', tier:5, req:['risk-reduction','strength','nutrition','recovery-protocol'],
+    desc:'Train, eat, sleep and screen for the decade you want at seventy, not next summer.' },
+]);
+
+addSkills({ cat: 'health', group: 'Illness & Medication' }, [
+  { id:'home-care-sick', name:'Nursing a Cold at Home', tier:1,
+    desc:'Fluids, rest, fever management and knowing when to stop self-treating.' },
+  { id:'medicine-cabinet', name:'Stocking a Medicine Cabinet', tier:2, req:['home-care-sick'],
+    desc:'The dozen things worth having, correctly stored, in date, and safely out of reach.' },
+  { id:'medication-management', name:'Managing Medication', tier:3, req:['medicine-cabinet','health-records'],
+    desc:'Doses, timing, adherence, interactions and never doubling up by accident.' },
+  { id:'antibiotic-literacy', name:'Antibiotic Literacy', tier:3, req:['medication-management','symptom-literacy'],
+    desc:'When they help, when they do not, and finishing the course properly.' },
+  { id:'chronic-management', name:'Managing a Chronic Condition', tier:4, req:['medication-management','discipline','lab-results'],
+    desc:'Daily self-monitoring, flare plans and a life built around the condition, not by it.' },
+  { id:'allergy-management', name:'Allergy & Intolerance Management', tier:3, req:['symptom-literacy','label-reading'],
+    desc:'Avoidance, labels, cross-contact and carrying what you need to carry.' },
+  { id:'pain-relief', name:'Using Painkillers Safely', tier:2, req:['medicine-cabinet'],
+    desc:'Ceilings, combinations, liver risk, and why more is not better.' },
+]);
+
+addSkills({ cat: 'health', group: 'Mental Health' }, [
+  { id:'mental-health-literacy', name:'Mental Health Literacy', tier:2, req:['emotion-naming'],
+    desc:'Tell a hard week from a disorder, and know what the common conditions look like.' },
+  { id:'help-seeking', name:'Asking for Help', tier:2, req:['mental-health-literacy','assertive'],
+    desc:'Say out loud that you are struggling, to someone who can actually do something.' },
+  { id:'therapy-navigation', name:'Finding & Using Therapy', tier:3, req:['help-seeking','doctor-conversation'],
+    desc:'Choose a modality and a therapist, and do the work between sessions.' },
+  { id:'crisis-support', name:'Supporting Someone in Crisis', tier:4, req:['mental-health-literacy','empathy','conflict'],
+    desc:'Stay, listen, assess risk, and connect them to real help without taking it on alone.' },
+  { id:'mood-tracking', name:'Mood & Symptom Tracking', tier:3, req:['mental-health-literacy','self-awareness'],
+    desc:'Collect enough data on yourself to see patterns a memory would smooth over.' },
+  { id:'relapse-planning', name:'Relapse & Crisis Planning', tier:4, req:['mood-tracking','therapy-navigation'],
+    desc:'Write down your early warning signs and the plan, while you are well.' },
+  { id:'addiction-literacy', name:'Addiction Literacy', tier:3, req:['mental-health-literacy','habit-breaking'],
+    desc:'Understand dependence, tolerance and craving in yourself or someone close.' },
+  { id:'sobriety', name:'Changing a Substance Habit', tier:4, req:['addiction-literacy','habit-breaking','help-seeking'],
+    desc:'Cut down or stop drinking, smoking or using — with structure, not willpower alone.' },
+  { id:'psych-recovery', name:'Long-Term Mental Recovery', tier:5, req:['relapse-planning','antifragility','sobriety'],
+    desc:'A durable life after a serious episode: meds, routine, people and meaning together.' },
+]);
+
+addSkills({ cat: 'health', group: 'Sexual & Reproductive Health' }, [
+  { id:'sex-ed', name:'Sexual Health Basics', tier:2, req:['anatomy-basics'],
+    desc:'Contraception, STIs, testing and consent as practical knowledge, not theory.' },
+  { id:'sti-testing', name:'Testing & Sexual Safety', tier:3, req:['sex-ed','gp-registration'],
+    desc:'Test regularly, disclose honestly, and use protection consistently.' },
+  { id:'cycle-literacy', name:'Cycle & Hormone Literacy', tier:3, req:['sex-ed','mood-tracking'],
+    desc:'Track a menstrual cycle and read hormonal effects on energy, mood and training.' },
+  { id:'fertility', name:'Fertility Awareness', tier:4, req:['cycle-literacy','lab-results'],
+    desc:'How conception, timing and age actually work, and when to seek investigation.' },
+  { id:'pregnancy-care', name:'Pregnancy & Antenatal Care', tier:4, req:['fertility','doctor-conversation'],
+    desc:'Trimesters, scans, warning signs and preparing for birth with a real plan.' },
+  { id:'menopause', name:'Menopause & Midlife Change', tier:4, req:['cycle-literacy','shared-decision'],
+    desc:'Symptoms, treatment options and separating this from unrelated midlife problems.' },
+]);
+
+addSkills({ cat: 'health', group: 'Caring for Others' }, [
+  { id:'caregiving', name:'Caregiving Basics', tier:3, req:['home-care-sick','empathy'],
+    desc:'Feed, wash, move and comfort someone who cannot do it for themselves.' },
+  { id:'child-illness', name:'Sick Children', tier:3, req:['home-care-sick','symptom-literacy'],
+    desc:'Fevers, rashes, dehydration and the specific signs that mean go to hospital now.' },
+  { id:'elder-care', name:'Caring for Ageing Parents', tier:4, req:['caregiving','medication-management','doctor-conversation'],
+    desc:'Mobility, memory, medication and the conversations everyone keeps postponing.' },
+  { id:'dementia-care', name:'Dementia Care', tier:5, req:['elder-care','equanimity','conflict'],
+    desc:'Communicate, redirect and keep dignity intact as capability declines.' },
+  { id:'palliative', name:'End-of-Life Care', tier:5, req:['elder-care','grief','shared-decision'],
+    desc:'Comfort care, hard conversations, and being present through a death.' },
+  { id:'carer-sustainability', name:'Sustaining Yourself as a Carer', tier:5, req:['caregiving','stress-management','boundaries'],
+    desc:'Accept help, protect your own health, and outlast a years-long caring role.' },
+]);
+
+addSkills({ cat: 'health', group: 'Sleep & Rhythms' }, [
+  { id:'circadian', name:'Circadian Rhythm', tier:2, req:['sleep'],
+    desc:'Light, timing and temperature as the levers that actually set the body clock.' },
+  { id:'shift-work', name:'Shift Work & Jet Lag', tier:4, req:['circadian','sleep-debugging'],
+    desc:'Anchor sleep, plan light exposure, and limit the damage of an unnatural schedule.' },
+  { id:'sleep-disorders', name:'Sleep Disorders', tier:4, req:['sleep-debugging','doctor-conversation'],
+    desc:'Apnoea, restless legs and insomnia recognised as treatable rather than endured.' },
+  { id:'napping', name:'Napping Well', tier:2, req:['sleep','rest-taking'],
+    desc:'Length, timing and caffeine so a nap helps rather than wrecking the night.' },
+]);
+
+addSkills({ cat: 'health', group: 'Specific Conditions' }, [
+  { id:'blood-pressure', name:'Managing Blood Pressure', tier:4, req:['vital-signs','chronic-management'],
+    desc:'Home monitoring, salt, weight, alcohol and adherence — the biggest quiet risk.' },
+  { id:'diabetes-management', name:'Diabetes Management', tier:5, req:['chronic-management','macros','lab-results'],
+    desc:'Glucose, carbohydrate, medication and feet, every day, forever.' },
+  { id:'asthma-copd', name:'Respiratory Conditions', tier:4, req:['chronic-management','symptom-literacy'],
+    desc:'Inhaler technique, triggers, peak flow and a written action plan for a flare.' },
+  { id:'back-pain', name:'Managing Back Pain', tier:3, req:['posture-health','rehab'],
+    desc:'Movement over rest, load management, and ignoring most of what you have been told.' },
+  { id:'headache-migraine', name:'Headache & Migraine', tier:3, req:['symptom-literacy','mood-tracking'],
+    desc:'Identify triggers, treat early, and recognise the red-flag headache.' },
+  { id:'gut-health', name:'Digestive Health', tier:3, req:['nutrition','symptom-literacy'],
+    desc:'Fibre, hydration, reflux and knowing which symptoms warrant investigation.' },
+  { id:'autoimmune', name:'Living With Autoimmune Disease', tier:5, req:['chronic-management','pain-management','carer-sustainability'],
+    desc:'Flares, fatigue, immunosuppression and a life planned around variability.' },
+  { id:'cancer-navigation', name:'Navigating a Cancer Diagnosis', tier:5, req:['shared-decision','health-advocacy','adversity'],
+    desc:'Staging, options, second opinions, side effects and the logistics of treatment.' },
+  { id:'infectious-outbreak', name:'Living Through an Outbreak', tier:5, req:['epidemiology','vaccination','risk-reduction'],
+    desc:'Assess personal risk, adapt behaviour proportionately, and ignore the noise.' },
+]);
+
+addSkills({ cat: 'health', group: 'Body Systems in Practice' }, [
+  { id:'hormone-literacy', name:'Hormone Literacy', tier:4, req:['physiology','lab-results'],
+    desc:'Thyroid, cortisol, insulin and sex hormones — what they do and what tests mean.' },
+  { id:'immune-literacy', name:'Understanding Immunity', tier:3, req:['biology-basics','vaccination'],
+    desc:'Innate and adaptive response, and why "boosting immunity" is mostly marketing.' },
+  { id:'metabolic-health', name:'Metabolic Health', tier:4, req:['macros','lab-results','movement-habit'],
+    desc:'Insulin sensitivity, visceral fat and the markers that predict the next thirty years.' },
+  { id:'bone-health', name:'Bone & Joint Health', tier:4, req:['strength','nutrition'],
+    desc:'Loading, calcium, vitamin D and screening — preventing the fracture that changes everything.' },
+  { id:'oral-health', name:'Advanced Dental Care', tier:3, req:['dental-care','doctor-conversation'],
+    desc:'Gum disease, grinding, and the fact that the mouth is connected to everything else.' },
+  { id:'skin-conditions', name:'Skin Conditions', tier:3, req:['skin-care','symptom-literacy'],
+    desc:'Eczema, acne and rashes — triggers, treatment ladders and when it is not skin.' },
+]);
+
+addSkills({ cat: 'health', group: 'Health in Context' }, [
+  { id:'workplace-health', name:'Occupational Health', tier:3, req:['posture-health','employment-rights'],
+    desc:'Hazards, adjustments and getting your workplace to accommodate a real condition.' },
+  { id:'disability-navigation', name:'Living With Disability', tier:5, req:['health-advocacy','bureaucracy','self-concept'],
+    desc:'Assessment, adaptation, entitlement and refusing to be defined by the paperwork.' },
+  { id:'alt-medicine-literacy', name:'Alternative Medicine Literacy', tier:4, req:['medical-research','misinformation'],
+    desc:'Separate what is plausible, what is placebo and what is actively dangerous.' },
+  { id:'supplements', name:'Supplements', tier:4, req:['nutrition-scepticism','medication-management'],
+    desc:'The three or four with evidence, correct dosing, and interactions with medication.' },
+  { id:'public-health-literacy', name:'Public Health Literacy', tier:5, req:['epidemiology','political-literacy'],
+    desc:'Population-level risk, screening trade-offs and why individual advice differs from policy.' },
+  { id:'global-health', name:'Global Health', tier:5, req:['public-health-literacy','economics-literacy'],
+    desc:'Burden of disease, access and where a marginal pound does the most good.' },
+]);
+
+addSkills({ cat: 'health', group: 'Everyday Health Habits' }, [
+  { id:'sun-protection', name:'Sun Protection', tier:1,
+    desc:'Shade, timing and cover — the cheapest cancer prevention there is.' },
+  { id:'alcohol-awareness', name:'Alcohol Awareness', tier:2, req:['self-awareness'],
+    desc:'Units, weekly totals and an honest account of what it is doing for you.' },
+  { id:'caffeine', name:'Caffeine Management', tier:2, req:['sleep','self-awareness'],
+    desc:'Dose, half-life and a cut-off time that protects the night.' },
+  { id:'sitting-less', name:'Breaking Up Sitting', tier:1,
+    desc:'Stand and move every half hour; the dose that matters is frequency, not duration.' },
+  { id:'weight-management', name:'Weight Management', tier:4, req:['macros','habits','body-acceptance'],
+    desc:'Energy balance, environment design and a rate of change you can sustain.' },
+  { id:'health-tracking', name:'Tracking Your Own Health', tier:3, req:['vital-signs','mood-tracking'],
+    desc:'Measure a few things consistently enough to spot a trend rather than noise.' },
+  { id:'annual-review-health', name:'An Annual Health Review', tier:4, req:['screening','health-tracking'],
+    desc:'One day a year on bloods, eyes, teeth, skin and the questions you keep avoiding.' },
+]);
+
+addSkills({ cat: 'health', group: 'Health Communication' }, [
+  { id:'symptom-diary', name:'Keeping a Symptom Diary', tier:2, req:['health-records','observation'],
+    desc:'Dates, severity and context recorded before the appointment, not during it.' },
+  { id:'appointment-prep', name:'Preparing for an Appointment', tier:3, req:['symptom-diary','summarising'],
+    desc:'Three questions written down and the timeline in one paragraph.' },
+  { id:'interpreting-advice', name:'Understanding Medical Advice', tier:3, req:['doctor-conversation','summarising'],
+    desc:'Repeat it back, ask what happens if it does not work, and write it down.' },
+  { id:'accompanying-patients', name:'Going With Someone', tier:3, req:['appointment-prep','listening'],
+    desc:'Take notes, ask the question they cannot, and remember what was said.' },
+  { id:'health-for-family', name:'Managing a Family’s Health', tier:5, req:['health-records','child-illness','elder-care'],
+    desc:'Appointments, vaccinations, medications and histories for four other people.' },
+]);
