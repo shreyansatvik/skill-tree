@@ -11,32 +11,38 @@ life, not just the employable parts.
 
 No build step, no dependencies, no internet. Plain HTML, CSS and JavaScript.
 
-## Running it on macOS
+## Running it
 
-Double-click **`Skill Tree.app`** in Finder. It starts a tiny local server
-(Python 3, already on macOS) and opens the app in your browser. The app stays
-in the Dock while it runs — quit it (Dock → Quit, or Cmd-Q) to stop the server.
-Keep the `.app` inside this project folder.
-
-> The first time you open it, macOS may say it's from an unidentified
-> developer. Right-click the app → **Open** → **Open**, just once.
-
-**`run.command`** does the same thing from a Terminal window; close the window
-to stop it.
-
-From a terminal instead:
+Any platform, no install beyond Python 3 (already present on macOS and
+Linux; on Windows get it from [python.org](https://www.python.org/downloads/)
+or the Microsoft Store):
 
 ```bash
-cd "path/to/this/folder"
-./run.command
+git clone https://github.com/shreyansatvik/skill-tree.git
+cd skill-tree
+python3 run.py        # Windows: py run.py
 ```
 
-Opening `index.html` directly by double-clicking also works, but the browser
-may refuse to remember your profile and progress on `file://` URLs — use
-`run.command` if you want either to be saved.
+It picks a free port, serves the folder, and opens your browser. Press
+`Ctrl-C` to stop.
 
-> If Finder opens `run.command` in a text editor instead of running it, run
-> `chmod +x run.command` once in Terminal.
+**On macOS** you can instead double-click **`Skill Tree.app`** in Finder — the
+same thing with a Dock icon; quit the app (⌘Q) to stop the server. The first
+time, macOS may call it an unidentified developer: right-click → **Open** →
+**Open**, once. `run.command` is the Terminal equivalent.
+
+> **Don't just double-click `index.html`.** Browsers block `localStorage` on
+> `file://` pages, so your profile and progress are silently discarded on
+> every reload. The app detects this and says so, but the fix is to serve it
+> with `run.py`.
+
+### Hosting it
+
+The site is plain static files, so it works on any static host. This repo
+ships a GitHub Pages workflow (`.github/workflows/pages.yml`) that validates
+the skill data and publishes on every push to `main` — enable it once under
+**Settings → Pages → Source: GitHub Actions**. The repository has to be
+public for Pages to serve it on a free plan.
 
 ## Setting up
 
@@ -169,4 +175,7 @@ reached from an empty slate.
 | `js/report.js` | Lays out the personalised progress report on top of `pdf.js` |
 | `tools/validate.js` | Data integrity checks |
 | `tools/layout-check.js` | Layout sanity checks |
-| `run.command` | macOS launcher |
+| `run.py` | Cross-platform launcher — Windows, macOS, Linux |
+| `run.command` | macOS launcher, from a Terminal window |
+| `Skill Tree.app` | macOS launcher, double-clickable in Finder |
+| `.github/workflows/pages.yml` | Validates the data and publishes to GitHub Pages |

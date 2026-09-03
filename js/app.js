@@ -131,14 +131,45 @@ function prune() {
 
 /* ------------------------------ persist ---------------------------- */
 
+/* Browsers refuse localStorage on a file:// origin (Chrome and Safari both
+   throw on access) and in some private windows. The tree still works, but
+   nothing is remembered — which is worth saying out loud, because silently
+   dropping every write loses a whole session's progress on the next reload
+   and looks like the app is broken rather than the way it was opened. */
+let storageOK = (() => {
+  try {
+    localStorage.setItem(STORAGE_KEY + '.probe', '1');
+    localStorage.removeItem(STORAGE_KEY + '.probe');
+    return true;
+  } catch (e) { return false; }
+})();
+
+/* Says so in both places the user might be looking: the gate's footnote,
+   which otherwise promises the opposite, and the app's warning strip. */
+function warnNoStorage() {
+  const onFile = location.protocol === 'file:';
+  const why = onFile
+    ? 'This page was opened directly from a file, and browsers block storage on file:// pages.'
+    : 'This browser is blocking local storage (a private window will do that).';
+  const fix = onFile ? ' Run it with run.py — see the README — to keep your progress.' : '';
+
+  if (el.gateFoot) el.gateFoot.textContent = 'Progress will not be saved. ' + why + fix;
+  const w = document.getElementById('warn');
+  if (w) { w.hidden = false; w.textContent = 'Progress will not be saved. ' + why + fix; }
+}
+
 function save() {
+  if (!storageOK) return;
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
       profile: state.profile,
       learned: [...state.learned],
       cats: [...state.cats],
     }));
-  } catch (e) { /* private mode — the tree still works, it just isn't remembered */ }
+  } catch (e) {
+    storageOK = false;      // quota, or storage revoked mid-session
+    warnNoStorage();
+  }
 }
 
 function loadStored() {
@@ -1214,6 +1245,8 @@ function init() {
     const goto = ev.target.closest('[data-goto]');
     if (goto) { select(goto.dataset.goto); centerOn(goto.dataset.goto); }
   });
+
+  if (!storageOK) warnNoStorage();
 
   if (loadStored()) showApp(); else openGate(null);
 }

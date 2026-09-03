@@ -228,11 +228,17 @@ const PDF = (() => {
     blob() { return new Blob([this.build()], { type: 'application/pdf' }); }
 
     save(filename) {
+      const url = URL.createObjectURL(this.blob());
       const a = document.createElement('a');
-      a.href = URL.createObjectURL(this.blob());
+      a.href = url;
       a.download = filename;
+      // Firefox only honours a download click on an anchor that is actually
+      // in the document; Chrome and Safari do not care either way.
+      a.style.display = 'none';
+      document.body.appendChild(a);
       a.click();
-      setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
     }
   }
 

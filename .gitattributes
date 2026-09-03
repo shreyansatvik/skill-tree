@@ -1,0 +1,13 @@
+# Shell scripts must keep LF endings even when the repo is cloned on
+# Windows with core.autocrlf=true. CRLF breaks the shebang line, and every
+# line after it, with "bash: \r: command not found".
+*.command  text eol=lf
+*.sh       text eol=lf
+*.py       text eol=lf
+"Skill Tree.app/Contents/MacOS/skill-tree" text eol=lf
+
+# Web sources are text; normalise them in the repo, check them out natively.
+*.html     text
+*.css      text
+*.js       text
+*.md       text
