@@ -26,10 +26,8 @@ python3 run.py        # Windows: py run.py
 It picks a free port, serves the folder, and opens your browser. Press
 `Ctrl-C` to stop.
 
-**On macOS** you can instead double-click **`Skill Tree.app`** in Finder — the
-same thing with a Dock icon; quit the app (⌘Q) to stop the server. The first
-time, macOS may call it an unidentified developer: right-click → **Open** →
-**Open**, once. `run.command` is the Terminal equivalent.
+**On macOS** you can instead double-click **`run.command`** in Finder, which
+opens a Terminal window and does the same thing; close the window to stop it.
 
 > **Don't just double-click `index.html`.** Browsers block `localStorage` on
 > `file://` pages, so your profile and progress are silently discarded on
@@ -176,6 +174,5 @@ reached from an empty slate.
 | `tools/validate.js` | Data integrity checks |
 | `tools/layout-check.js` | Layout sanity checks |
 | `run.py` | Cross-platform launcher — Windows, macOS, Linux |
-| `run.command` | macOS launcher, from a Terminal window |
-| `Skill Tree.app` | macOS launcher, double-clickable in Finder |
+| `run.command` | macOS launcher, double-clickable in Finder |
 | `.github/workflows/pages.yml` | Validates the data and publishes to GitHub Pages |

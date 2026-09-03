@@ -4,7 +4,6 @@
 *.command  text eol=lf
 *.sh       text eol=lf
 *.py       text eol=lf
-"Skill Tree.app/Contents/MacOS/skill-tree" text eol=lf
 
 # Web sources are text; normalise them in the repo, check them out natively.
 *.html     text
