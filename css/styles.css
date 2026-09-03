@@ -264,7 +264,7 @@ button { cursor: pointer; }
 .pill-clear:hover { color: var(--text); text-decoration: underline; }
 
 .menu {
-  position: absolute; z-index: 60; min-width: 190px; max-height: 320px; overflow-y: auto;
+  position: fixed; z-index: 60; min-width: 190px; max-height: 320px; overflow-y: auto;
   background: var(--surface); border: 1px solid var(--line);
   border-radius: var(--r); box-shadow: var(--shadow-3);
   padding: 5px;
@@ -307,7 +307,20 @@ button { cursor: pointer; }
 }
 .board.grabbing { cursor: grabbing; }
 
-#canvas { position: absolute; top: 0; left: 0; transform-origin: 0 0; }
+/* While actively panning/zooming, the pointer glides over many nodes as the
+   canvas slides underneath it — without this, each one would fire :hover
+   (transform + box-shadow repaint) as it passes. Turning off pointer events
+   for the duration removes that churn; the drag itself doesn't need hit
+   testing because it runs via pointer capture on #board, not on the nodes. */
+.board.panning #canvas { pointer-events: none; }
+
+#canvas {
+  position: absolute; top: 0; left: 0; transform-origin: 0 0;
+  /* Promote to its own compositor layer: once it's a layer, pan/zoom just
+     slides or scales an existing bitmap instead of repainting ~4,000 SVG
+     paths and ~2,000 node buttons on every frame. */
+  will-change: transform;
+}
 
 .band {
   position: absolute;
@@ -341,15 +354,28 @@ button { cursor: pointer; }
 
 #svg { position: absolute; top: 0; left: 0; pointer-events: none; overflow: visible; }
 
-.edge {
-  fill: none; stroke: #dde1e7; stroke-width: 1.5;
-  transition: stroke .2s, opacity .2s, stroke-width .2s;
-}
-.edge.cross { stroke-dasharray: 4 4; }
-.edge.open  { stroke: color-mix(in srgb, var(--c) 45%, #dde1e7); }
-.edge.done  { stroke: var(--green); stroke-width: 1.8; opacity: .55; }
-.edge.faded { opacity: .18; }
-.edge.lit   { opacity: 1; stroke-width: 2.4; stroke: var(--c); stroke-dasharray: none; }
+/* Edges are batched into a handful of paths by state (see rebuildEdgeBuckets
+   in app.js) rather than one <path> per prerequisite link — a few thousand
+   individual SVG elements each getting their own class toggles was the
+   single biggest cost on a board this size. Each bucket holds many
+   subpaths ("M…C… M…C…") concatenated into one `d` attribute. */
+#edgeBase { transition: opacity .2s; }
+#edgeBase.dimmed { opacity: .18; }
+
+.edge-plain { fill: none; stroke: #dde1e7; stroke-width: 1.5; }
+.edge-plain.cross { stroke-dasharray: 4 4; }
+.edge-open  { fill: none; stroke: #2563eb; stroke-width: 1.5; }
+.edge-open.cross { stroke-dasharray: 4 4; }
+/* Pre-mixed with the board background rather than an opacity value, so it
+   doesn't compound with #edgeBase.dimmed's own opacity when both apply. */
+.edge-done  { fill: none; stroke: color-mix(in srgb, #10794f 60%, #ffffff); stroke-width: 1.8; }
+.edge-done.cross { stroke-dasharray: 4 4; }
+
+/* The highlighted prerequisite chain for whatever's selected — small and
+   redrawn on each selection change, so individual per-edge colour (by the
+   unlocked skill's branch) stays affordable here even though it isn't for
+   the base mass of edges. */
+.edge-lit { fill: none; stroke-width: 2.4; }
 
 #nodeLayer { position: absolute; top: 0; left: 0; }
 
@@ -361,7 +387,9 @@ button { cursor: pointer; }
   border-radius: 10px;
   box-shadow: var(--shadow-1);
   transition: transform .12s, box-shadow .16s, opacity .18s, border-color .16s, background .16s;
-  content-visibility: auto;   /* thousands of nodes: skip the offscreen ones */
+  /* No content-visibility here on purpose: only nodes within the viewport
+     (plus a margin) are ever mounted at all — see syncVisibleNodes() in
+     app.js — so there is nothing left for it to skip. */
 }
 .node:hover { transform: translateY(-1px); box-shadow: var(--shadow-2); border-color: #d3d8e0; z-index: 3; }
 

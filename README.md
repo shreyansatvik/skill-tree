@@ -1,4 +1,4 @@
-# 🌳 Skill Tree
+# Skill Tree
 
 A life-skills progression map: every skill a person might plausibly want,
 arranged in a game-style tech tree. **2,044 skills across 26 branches and 5
@@ -25,23 +25,36 @@ cd "path/to/this/folder"
 ```
 
 Opening `index.html` directly by double-clicking also works, but the browser
-may refuse to remember your progress on `file://` URLs — use `run.command` if
-you want progress saved.
+may refuse to remember your profile and progress on `file://` URLs — use
+`run.command` if you want either to be saved.
 
 > The first time you double-click, macOS may ask permission to run it.
 > If Finder opens the file in a text editor instead, run
 > `chmod +x run.command` once in Terminal.
+
+## Setting up
+
+The first time you open the app you're asked for a name, age and gender.
+Nothing is uploaded — it's stored in this browser's `localStorage` alongside
+your progress, and is only used to head up the PDF report you export. You can
+edit it or clear it at any time from the profile menu in the bottom-left
+corner.
 
 ## Finding your way around 2,000 skills
 
 The whole board is about 3,900 × 18,000 pixels, so the default view is an
 overview rather than something you read. Two things make it usable:
 
-- **Focus one branch.** Hover a branch in the sidebar and click **only**. The
-  layout re-flows for that branch alone — taller and narrower, so it fits the
-  width of the screen at a readable zoom. This is the intended way to work.
-- **Search.** Press `/` and type. It matches names, groups and descriptions,
-  shows a match count, and `Enter` jumps to and selects the first hit.
+- **Focus one branch.** Click a branch in the left rail. The layout re-flows
+  for that branch alone — taller and narrower, so it fits the width of the
+  screen at a readable zoom. This is the intended way to work. **All
+  branches** at the top of the rail returns to the full board.
+- **Search.** Press `/` and type. It matches names, groups and descriptions.
+
+The header also carries three filter pills — **Branches**, **Tier** and
+**Status** — for combinations the rail can't express: several branches at
+once, a single tier across everything, or only the skills that are ready to
+start. **Clear filters** appears whenever any of them, or a search, is active.
 
 Your branch selection is remembered along with your progress, so you come back
 to whatever you were working through.
@@ -51,7 +64,7 @@ to whatever you were working through.
 - **Tiers run left to right** — Tier 1 (Foundation) through Tier 5 (Mastery).
 - **Branches are the horizontal bands**, and within a band skills are clustered
   by **group** — the sub-domain shown above each skill's name (`T3 · Camp
-  Craft`) and in the detail panel.
+  Craft`) and in the skill card.
 - A tier is not a single column any more. Each band picks a block height from
   the size of its biggest tier, and wraps into as many sub-columns as it needs.
   The fewer branches are on screen, the taller and narrower those blocks get.
@@ -62,26 +75,32 @@ to whatever you were working through.
 - Marking a skill learned awards XP (tier × 10) and levels you up.
 - Unlearning a skill also unlearns everything built on top of it, so the tree
   is always internally consistent.
+- Clicking a skill opens a floating card — drag it by its header if it's in
+  the way of what you're looking at.
 
 ## Controls
 
 | Action | How |
 |---|---|
-| See a skill's requirements and unlocks | click it |
-| Mark learned / not learned | ⇧-click, double-click, or the button in the panel |
-| Learn an entire prerequisite chain at once | select a locked skill → **Learn the whole path** |
-| Focus one branch | hover a branch in the sidebar → **only** |
-| Show/hide a branch | click its name in the sidebar |
-| Show every branch / just one | **all** / **one** next to the Branches heading |
+| See a skill's requirements and unlocks | click it — opens the floating card |
+| Mark learned / not learned | ⇧-click, double-click, or the button on the card |
+| Learn an entire prerequisite chain at once | select a locked skill → **Whole path** |
+| Focus one branch | click it in the left rail |
+| Show every branch | **All branches** at the top of the rail |
+| Filter by several branches, a tier, or status | the **Branches** / **Tier** / **Status** pills |
 | Pan | drag the background |
 | Zoom | ⌘-scroll, or the +/− buttons |
 | Fit to screen | **Fit**, or press `f` |
-| Search | type in the box, or press `/` (Enter jumps to the first match) |
-| Hide everything still locked | **Hide locked** checkbox |
-| Back up / move progress | **Export** and **Import** (a small JSON file) |
+| Search | type in the box, or press `/` |
+| Reset progress | **Reset** in the rail |
+| Export a personalised progress report | **Export report** — downloads a PDF |
+| Move progress to another browser | **Restore** — paste the code from a report |
+| Edit your name / age / gender | the profile card, bottom-left |
 
-Progress is stored in your browser's `localStorage`, per browser. Export if you
-want it somewhere permanent.
+Progress and your profile are stored in your browser's `localStorage`, per
+browser. Export a report if you want a permanent, personal, human-readable
+record — its last page carries a compact restore code you can paste into
+**Restore** on any other browser to bring the same progress back.
 
 ## Adding your own skills
 
@@ -111,6 +130,10 @@ To add a whole new branch, add an entry to `CATEGORIES` (id, name, colour,
 icon), create `js/skills/<id>.js`, and add a `<script>` tag for it in
 `index.html` alongside the others.
 
+New skills should be appended to the end of a branch file rather than inserted
+in the middle — restore codes encode progress as a bitset over the order
+skills are defined in, so appending keeps old codes decoding correctly.
+
 ### Checking your edits
 
 Two scripts run the real data and the real layout under Node, so mistakes show
@@ -130,12 +153,14 @@ reached from an empty slate.
 
 | File | What's in it |
 |---|---|
-| `index.html` | Page structure, and the script tags that load each branch |
+| `index.html` | Page structure — login gate, app shell, and the script tags that load each branch |
 | `css/styles.css` | All styling |
 | `js/skills.js` | Categories, tiers, and the registry the branch files append to |
 | `js/skills/*.js` | The skill data — 26 files, one per branch. The files you'll edit |
 | `js/layout.js` | Builds the graph and positions every node and connector |
-| `js/app.js` | Progress state, rendering, interaction, save/load |
+| `js/app.js` | Profile, progress state, rendering, interaction, save/load |
+| `js/pdf.js` | A small from-scratch PDF writer — text, wrapping, bars, rounded rects |
+| `js/report.js` | Lays out the personalised progress report on top of `pdf.js` |
 | `tools/validate.js` | Data integrity checks |
 | `tools/layout-check.js` | Layout sanity checks |
 | `run.command` | macOS launcher |
