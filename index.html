@@ -3,109 +3,203 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Skill Tree — Life Skills Progression</title>
+  <title>Skill Tree</title>
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌳</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%2316181d'/><path d='M9 21V11h3.4l3.6 5.6L19.6 11H23v10h-2.6v-6l-3.2 4.9h-1.4L12.6 15v6z' fill='%23fff'/></svg>">
 </head>
 <body>
-<div class="app">
 
-  <header class="topbar">
-    <div class="brand">
-      <h1>🌳 Skill Tree</h1>
-      <span class="sub"><span id="total">0</span> skills · <span id="branches">0</span> branches · 5 tiers</span>
+<!-- ============================ login ============================ -->
+<div class="gate" id="gate">
+  <form class="gate-card" id="gateForm" autocomplete="off">
+    <div class="gate-mark">ST</div>
+    <h1>Set up your profile</h1>
+    <p class="lede">The tree tracks 2,044 skills against you personally. Your details stay in this
+      browser and are used to head up the progress report you export.</p>
+
+    <div class="field">
+      <label for="pfName">Name</label>
+      <input id="pfName" name="name" type="text" placeholder="e.g. Alex Rivera" maxlength="60" required>
     </div>
 
-    <div class="search-wrap">
-      <span class="mag">⌕</span>
-      <input id="search" type="search" placeholder="Search skills…" autocomplete="off">
+    <div class="field-row">
+      <div class="field">
+        <label for="pfAge">Age</label>
+        <input id="pfAge" name="age" type="number" min="5" max="120" step="1" placeholder="28" required>
+      </div>
+      <div class="field">
+        <label for="pfGender">Gender</label>
+        <select id="pfGender" name="gender" required>
+          <option value="" disabled selected>Select…</option>
+          <option>Woman</option>
+          <option>Man</option>
+          <option>Non-binary</option>
+          <option value="self">Self-describe…</option>
+          <option>Prefer not to say</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field" id="pfSelfWrap" hidden>
+      <label for="pfSelf">How would you describe it?</label>
+      <input id="pfSelf" type="text" maxlength="40" placeholder="Your own words">
+    </div>
+
+    <button class="btn-primary" type="submit">Continue</button>
+    <p class="gate-foot" id="gateFoot">Nothing is uploaded. Everything lives in this browser's local storage,
+      and you can change or clear it any time from the profile menu.</p>
+  </form>
+</div>
+
+<!-- ============================= app ============================= -->
+<div class="app" id="app" hidden>
+
+  <!-- ---------------------------- left rail --------------------------- -->
+  <aside class="rail">
+    <div class="rail-search">
+      <span class="icon">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6.2" cy="6.2" r="4.2" stroke="currentColor" stroke-width="1.4"/><path d="M9.4 9.4 12 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </span>
+      <input id="search" type="search" placeholder="Search skills" autocomplete="off">
       <span class="kbd">/</span>
     </div>
-    <span id="hits" class="hits"></span>
 
-    <label class="switch" title="Hide skills whose prerequisites you haven't met">
-      <input type="checkbox" id="availToggle"> Hide locked
-    </label>
+    <button class="nav-item" id="navAll">
+      <span class="glyph">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x=".7" y=".7" width="4.6" height="4.6" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="7.7" y=".7" width="4.6" height="4.6" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x=".7" y="7.7" width="4.6" height="4.6" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="7.7" y="7.7" width="4.6" height="4.6" rx="1.2" stroke="currentColor" stroke-width="1.3"/></svg>
+      </span>
+      <span class="label">All branches</span>
+      <span class="count" id="navAllCount"></span>
+    </button>
 
-    <div class="spacer"></div>
+    <div class="rail-sep"></div>
 
-    <div class="tools">
-      <button class="tool" id="zoomOut" title="Zoom out (−)">−</button>
-      <span id="zoomLabel">100%</span>
-      <button class="tool" id="zoomIn" title="Zoom in (+)">+</button>
-      <button class="tool" id="fit" title="Fit to screen (f)">Fit</button>
-      <button class="tool" id="export" title="Download your progress as JSON">Export</button>
-      <button class="tool" id="importBtn" title="Load a progress file">Import</button>
-      <input type="file" id="importInput" accept="application/json" hidden>
-      <button class="tool danger" id="reset" title="Clear all progress">Reset</button>
+    <div class="rail-label">
+      <span>Branches</span>
+      <button id="navReset" type="button">Reset</button>
     </div>
-  </header>
 
-  <div id="warn" hidden></div>
+    <div class="rail-scroll" id="navBranches"></div>
 
-  <div class="main">
+    <div class="rail-sep"></div>
+    <div class="rail-foot">
+      <button class="user-card" id="userCard" type="button">
+        <span class="avatar" id="userAvatar">–</span>
+        <span class="who"><b id="userName">—</b><span id="userMeta">—</span></span>
+        <span class="dots">···</span>
+      </button>
+    </div>
+  </aside>
 
-    <aside class="sidebar">
-      <div class="level-card">
-        <div class="level-row">
-          <div class="level-badge" id="level">1</div>
-          <div class="level-info">
-            <div class="lbl">Total XP</div>
-            <div class="val"><span id="xp">0</span> XP</div>
-            <div class="bar"><i id="levelBar"></i></div>
-          </div>
+  <!-- ------------------------------ centre ----------------------------- -->
+  <main class="main">
+    <div class="head">
+      <div class="head-top">
+        <div>
+          <h1 id="viewTitle">All branches</h1>
+          <p class="sub" id="viewSub">—</p>
         </div>
-        <div class="tiny"><span id="levelHint">—</span></div>
-
-        <div class="bar big" style="margin-top:14px"><i id="overallBar"></i></div>
-        <div class="tiny">
-          <span id="countLabel">0 / 0 skills</span>
-          <span id="availableLabel">—</span>
+        <div class="spacer"></div>
+        <div class="head-actions">
+          <button class="btn" id="btnRestore" type="button"><span class="g">↓</span> Restore</button>
+          <button class="btn dark" id="btnExport" type="button"><span class="g">↑</span> Export report</button>
         </div>
       </div>
 
-      <div class="side-title">
-        Branches
-        <span class="side-actions">
-          <button class="mini" id="catAll" title="Show every branch">all</button>
-          <button class="mini" id="catNone" title="Show just the first branch">one</button>
-        </span>
+      <div class="filters">
+        <button class="pill" id="fBranch" type="button">Branches <span class="badge" id="fBranchN">26</span> <span class="chev">▾</span></button>
+        <button class="pill" id="fTier" type="button">Tier <span class="chev">▾</span></button>
+        <button class="pill" id="fStatus" type="button">Status <span class="chev">▾</span></button>
+        <button class="pill-clear" id="fClear" type="button" hidden>Clear filters</button>
       </div>
-      <div class="side-hint block">Click a name to hide it · <b>only</b> to focus one branch</div>
-      <div id="catList"></div>
+    </div>
 
-      <div class="side-title">Legend</div>
-      <div class="legend">
-        <div><span class="dot learned"></span> Learned</div>
-        <div><span class="dot available"></span> Unlocked — ready to start</div>
-        <div><span class="dot locked"></span> Locked — needs prerequisites</div>
-        <div><span class="dot" style="background:#2b3549"></span> Solid line: same branch</div>
-        <div><span class="dot" style="background:repeating-linear-gradient(90deg,#2b3549 0 3px,transparent 3px 6px)"></span> Dashed: cross-branch</div>
-      </div>
+    <div id="warn" hidden></div>
 
-      <div class="side-title">Shortcuts</div>
-      <div class="keys">
-        <b>click</b> select skill<br>
-        <b>⇧ click</b> / <b>double-click</b> learn or unlearn<br>
-        <b>drag</b> pan · <b>⌘ scroll</b> zoom<br>
-        <b>/</b> search · <b>f</b> fit · <b>esc</b> deselect
-      </div>
-    </aside>
-
-    <main class="viewport" id="viewport">
+    <div class="board" id="board">
       <div id="canvas">
         <div id="chrome"></div>
         <svg id="svg" xmlns="http://www.w3.org/2000/svg"></svg>
         <div id="nodeLayer"></div>
       </div>
-    </main>
 
-    <aside class="detail" id="detail"></aside>
+      <!-- floating skill card -->
+      <section class="card" id="card" hidden></section>
 
-  </div>
+      <div class="zoombar">
+        <button id="zoomOut" title="Zoom out (−)">−</button>
+        <span class="val" id="zoomLabel">100%</span>
+        <button id="zoomIn" title="Zoom in (+)">+</button>
+        <span class="sep"></span>
+        <button id="fit" title="Fit to screen (f)">Fit</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- --------------------------- stats rail --------------------------- -->
+  <aside class="stats">
+    <div class="sect">
+      <div class="sect-head"><span>Completion</span><span class="note" id="compNote">—</span></div>
+      <div class="gauge-wrap">
+        <div class="gauge">
+          <svg width="168" height="112" viewBox="0 0 168 112">
+            <path d="M 37.2 100 A 54 54 0 1 1 130.8 100" fill="none" stroke="#eceef1" stroke-width="13" stroke-linecap="round"/>
+            <path id="gaugeArc" d="M 37.2 100 A 54 54 0 1 1 130.8 100" fill="none" stroke="#10794f" stroke-width="13"
+                  stroke-linecap="round" stroke-dasharray="226.2" stroke-dashoffset="226.2"/>
+          </svg>
+          <div class="center">
+            <div class="big" id="gaugePct">0%</div>
+            <div class="small" id="gaugeSub">0 of 2,044</div>
+          </div>
+        </div>
+        <div class="gauge-legend">
+          <div><b id="gXp">0</b><span class="k" style="background:#10794f"></span>Total XP</div>
+          <div><b id="gLevel">1</b><span class="k" style="background:#cbd2da"></span>Level</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-head"><span>Status</span><span class="note" id="statusNote">All branches</span></div>
+      <div class="segbar">
+        <i id="segLearned" style="background:#10794f;width:0%"></i>
+        <i id="segReady" style="background:#2563eb;width:0%"></i>
+        <i id="segLocked" style="background:#dfe3e8;width:100%"></i>
+      </div>
+      <div class="legend">
+        <div class="legend-row"><span class="k" style="background:#10794f"></span><span class="label">Learned</span><span class="n" id="nLearned">0</span><span class="v" id="pLearned">0%</span></div>
+        <div class="legend-row"><span class="k" style="background:#2563eb"></span><span class="label">Ready to start</span><span class="n" id="nReady">0</span><span class="v" id="pReady">0%</span></div>
+        <div class="legend-row"><span class="k" style="background:#dfe3e8"></span><span class="label">Locked</span><span class="n" id="nLocked">0</span><span class="v" id="pLocked">0%</span></div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-head"><span>Overview</span></div>
+      <div class="grid2">
+        <div class="stat"><div class="v" id="ovBranches">0</div><div class="l">Branches started</div></div>
+        <div class="stat"><div class="v" id="ovTop">—</div><div class="l">Strongest branch</div></div>
+        <div class="stat"><div class="v" id="ovTier">—</div><div class="l">Deepest tier reached</div></div>
+        <div class="stat"><div class="v" id="ovNext">0</div><div class="l">Unlocked, untouched</div></div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-head"><span>Next up</span><span class="note">Ready now</span></div>
+      <div class="uplist" id="nextUp"></div>
+    </div>
+  </aside>
 </div>
 
-<!-- categories, tiers and the registry every domain file appends to -->
+<!-- ---------------------------- overlays ---------------------------- -->
+<div class="menu" id="menu" hidden></div>
+
+<div class="scrim" id="scrim" hidden>
+  <div class="modal" id="modal"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- categories, tiers and the registry every branch file appends to -->
 <script src="js/skills.js"></script>
 
 <!-- the skill data itself, one file per branch -->
@@ -137,6 +231,8 @@
 <script src="js/skills/travel.js"></script>
 
 <script src="js/layout.js"></script>
+<script src="js/pdf.js"></script>
+<script src="js/report.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
