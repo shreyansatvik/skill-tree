@@ -1,8 +1,14 @@
 name: Publish
 
 # Validates the skill data on every push, and publishes the site to GitHub
-# Pages from main. Pages must be enabled once, by hand, under
-# Settings -> Pages -> Source: "GitHub Actions".
+# Pages from main.
+#
+# Pages must be switched on once, by hand, before the deploy job can work:
+#   Settings -> Pages -> Build and deployment -> Source: "GitHub Actions"
+# The workflow cannot do this for itself. configure-pages has an
+# `enablement` option that calls the create-Pages-site API, but the
+# built-in GITHUB_TOKEN is not allowed to use it ("Resource not accessible
+# by integration") — creating the site needs repo-admin rights.
 
 on:
   push:
@@ -26,12 +32,14 @@ jobs:
     name: Validate skill data
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
-          node-version: '20'
+          node-version: '22'
       - name: Check ids, prerequisites, tiers and reachability
         run: node tools/validate.js
+      - name: Check the board layout has no overlapping nodes
+        run: node tools/layout-check.js
 
   deploy:
     name: Deploy to Pages
@@ -42,14 +50,10 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      # enablement turns Pages on via the API if it is off, which it is by
-      # default — otherwise this step fails and the deploy never runs.
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/checkout@v7
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: .
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
