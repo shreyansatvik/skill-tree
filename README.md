@@ -1,5 +1,8 @@
 # Skill Tree
 
+**▶ [Open the app](https://shreyansatvik.github.io/skill-tree/)** — runs in
+your browser, nothing to install.
+
 A life-skills progression map: every skill a person might plausibly want,
 arranged in a game-style tech tree. **2,044 skills across 26 branches and 5
 tiers, linked by 3,961 prerequisites** — learning one skill unlocks the more
@@ -13,9 +16,13 @@ No build step, no dependencies, no internet. Plain HTML, CSS and JavaScript.
 
 ## Running it
 
-Any platform, no install beyond Python 3 (already present on macOS and
-Linux; on Windows get it from [python.org](https://www.python.org/downloads/)
-or the Microsoft Store):
+The easiest way is the hosted copy —
+**<https://shreyansatvik.github.io/skill-tree/>** — which needs nothing
+installed and saves your progress in that browser.
+
+To run it yourself instead, on any platform, with no install beyond Python 3
+(already present on macOS and Linux; on Windows get it from
+[python.org](https://www.python.org/downloads/) or the Microsoft Store):
 
 ```bash
 git clone https://github.com/shreyansatvik/skill-tree.git
@@ -37,10 +44,15 @@ opens a Terminal window and does the same thing; close the window to stop it.
 ### Hosting it
 
 The site is plain static files, so it works on any static host. This repo
-ships a GitHub Pages workflow (`.github/workflows/pages.yml`) that validates
-the skill data and publishes on every push to `main` — enable it once under
-**Settings → Pages → Source: GitHub Actions**. The repository has to be
-public for Pages to serve it on a free plan.
+publishes to <https://shreyansatvik.github.io/skill-tree/> through
+`.github/workflows/pages.yml`, which validates the skill data and the board
+layout first, so a broken `req` id cannot reach the live site.
+
+To point a fork at your own copy, enable Pages once under **Settings → Pages →
+Build and deployment → Source: GitHub Actions** — the workflow cannot switch
+it on for you, because the built-in token is not allowed to create a Pages
+site. The repository also has to be public for Pages to serve it on a free
+plan.
 
 ## Setting up
 
