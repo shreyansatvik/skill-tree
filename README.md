@@ -93,7 +93,8 @@ to whatever you were working through.
 - A skill is **locked** until every prerequisite is learned. Prerequisites cross
   branches constantly — Storytelling needs Public Speaking *and* Creative
   Writing; Machine Learning needs Data Analysis *and* Calculus; Sourdough needs
-  Bread Making *and* Fermentation. Cross-branch links are dashed.
+  Bread Making *and* Fermentation. Cross-branch links are drawn fainter than
+  links inside a branch.
 - Marking a skill learned awards XP (tier × 10) and levels you up.
 - Unlearning a skill also unlearns everything built on top of it, so the tree
   is always internally consistent.

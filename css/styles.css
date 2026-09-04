@@ -366,14 +366,23 @@ button { cursor: pointer; }
 #edgeBase { transition: opacity .2s; }
 #edgeBase.dimmed { opacity: .18; }
 
+/* Cross-branch links are drawn fainter than same-branch ones, NOT dashed.
+   stroke-dasharray was measured at ten times the cost of everything else on
+   the board put together: each .cross path concatenates hundreds of subpaths
+   spanning a 3888x17970 canvas, and dashing makes the rasterizer walk that
+   whole geometry computing 4px dash boundaries on every frame. Pan frame
+   time was 162ms with the dashes and 16.7ms without, with nothing else
+   changed; coarsening the pattern to 12 10 landed halfway, at 101ms, which
+   is the mechanism showing through. Stroke width made no difference at all,
+   so this is dash-segment count, not fill area. */
 .edge-plain { fill: none; stroke: #dde1e7; stroke-width: 1.5; }
-.edge-plain.cross { stroke-dasharray: 4 4; }
+.edge-plain.cross { stroke: #eaedf1; }
 .edge-open  { fill: none; stroke: #2563eb; stroke-width: 1.5; }
-.edge-open.cross { stroke-dasharray: 4 4; }
+.edge-open.cross { stroke: color-mix(in srgb, #2563eb 42%, #ffffff); }
 /* Pre-mixed with the board background rather than an opacity value, so it
    doesn't compound with #edgeBase.dimmed's own opacity when both apply. */
 .edge-done  { fill: none; stroke: color-mix(in srgb, #10794f 60%, #ffffff); stroke-width: 1.8; }
-.edge-done.cross { stroke-dasharray: 4 4; }
+.edge-done.cross { stroke: color-mix(in srgb, #10794f 30%, #ffffff); }
 
 /* The highlighted prerequisite chain for whatever's selected — small and
    redrawn on each selection change, so individual per-edge colour (by the
