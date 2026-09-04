@@ -39,7 +39,6 @@ const state = {
 
 const el = {};
 const nodeEls = new Map();     // currently-mounted node id -> <button>
-let visibleNodeIds = null;     // ids syncVisibleNodes() decided belong on screen right now
 let openFilter = null;          // 'branch' | 'tier' | 'status' | 'user' | null
 let toastTimer = 0;
 
@@ -283,9 +282,9 @@ function buildBoard() {
      in and out of view, is the real cost a "large image" complaint is
      about. syncVisibleNodes() (called from refresh() and from every camera
      move below) mounts only what's within the viewport plus a small
-     margin, so the live DOM stays around a hundred-odd nodes regardless of
-     how many the board actually has. */
-  visibleNodeIds = null;   // force a full resync against the fresh VIEW
+     margin, so the live DOM stays in the low hundreds regardless of how
+     many the board actually has. nodeEls was cleared at the top of this
+     function, so the next sync rebuilds against the fresh VIEW. */
 }
 
 function createNodeButton(n) {
@@ -306,7 +305,12 @@ function createNodeButton(n) {
 function visibleRect() {
   const r = getBoardRect();
   const { x, y, k } = state.view;
-  const m = 480 / k;
+  /* 480 screen px of pre-mounting, but capped in board space. Uncapped,
+     480/k is over 1,300 board px in every direction at a fit-to-screen zoom
+     and 3,200 at the minimum — far bigger than the viewport itself, which
+     mounted 589 nodes on opening and 1,382 when zoomed out, not the
+     "hundred-odd" this culling is supposed to keep live. */
+  const m = Math.min(480 / k, 400);
   return {
     left: -x / k - m, top: -y / k - m,
     right: (r.width - x) / k + m, bottom: (r.height - y) / k + m,
@@ -336,7 +340,6 @@ function syncVisibleNodes() {
     nodeEls.set(id, btn);
   }
   el.nodeLayer.appendChild(frag);
-  visibleNodeIds = need;
 }
 
 /* ----------------------------- rendering --------------------------- */
@@ -377,7 +380,11 @@ function styleMountedNodes(q, chain) {
 function syncViewport() {
   syncVisibleNodes();
   styleMountedNodes(state.query.trim().toLowerCase(), state.selected ? highlightSet(state.selected) : null);
-  rebuildEdgeBuckets();
+  /* Deliberately does NOT rebuild the edge buckets. An edge's appearance
+     depends only on state.learned, never on where the camera is, so a pan
+     can just let the canvas transform carry the existing paths. Rewriting
+     six `d` attributes every frame made the browser re-parse and
+     re-rasterize the whole SVG on each one, for an identical picture. */
 }
 
 function refresh() {
@@ -388,6 +395,7 @@ function refresh() {
   if (q) for (const n of VIEW.nodes) if (SEARCH_TEXT.get(n.id).includes(q)) hits++;
 
   syncViewport();
+  rebuildEdgeBuckets();
   rebuildLitOverlay(chain);
 
   renderHeader(q, hits);
@@ -405,10 +413,8 @@ function refresh() {
    can change. */
 function rebuildEdgeBuckets() {
   const b = el.edgeBucket;
-  const need = visibleNodeIds;
   const plain = [], plainCross = [], open = [], openCross = [], done = [], doneCross = [];
   for (const e of VIEW.edges) {
-    if (need && !need.has(e.from) && !need.has(e.to)) continue;
     const toDone = isLearned(e.from) && isLearned(e.to);
     const toOpen = !toDone && isLearned(e.from);
     const bucket = toDone ? (e.cross ? doneCross : done)
@@ -482,8 +488,17 @@ function renderStats() {
   el.gLevel.textContent = String(level);
   el.compNote.textContent = state.cats.size === CATEGORIES.length ? 'All branches' : state.cats.size + ' branches';
 
-  let ready = 0;
-  for (const n of FULL.nodes) if (isAvailable(n.id)) ready++;
+  /* One pass for everything that needs a sweep of the graph. isAvailable()
+     walks a skill's prerequisites, so running it three separate times over
+     all 2,044 nodes — as this did, for `ready`, `untouched` and `readyNodes`
+     — repeated the same work on every selection click. */
+  const readyNodes = [];
+  let deepestTier = 0;
+  for (const n of FULL.nodes) {
+    if (isLearned(n.id)) { if (n.tier > deepestTier) deepestTier = n.tier; }
+    else if (isAvailable(n.id)) readyNodes.push(n);
+  }
+  const ready = readyNodes.length;
   const locked = all - done - ready;
 
   el.segLearned.style.width = (done / all * 100) + '%';
@@ -495,7 +510,7 @@ function renderStats() {
   el.statusNote.textContent = nf(all) + ' total';
 
   // overview
-  let started = 0, strongest = null, deepestTier = 0, untouched = 0;
+  let started = 0, strongest = null;
   for (const c of CATEGORIES) {
     const inCat = CAT_NODES.get(c.id);
     let d = 0;
@@ -503,16 +518,14 @@ function renderStats() {
     if (d > 0) started++;
     if (!strongest || d > strongest.d) strongest = { c, d };
   }
-  for (const n of FULL.nodes) if (isLearned(n.id) && n.tier > deepestTier) deepestTier = n.tier;
-  for (const n of FULL.nodes) if (isAvailable(n.id)) untouched++;
 
   el.ovBranches.textContent = started + ' / ' + CATEGORIES.length;
   el.ovTop.textContent = strongest && strongest.d > 0 ? strongest.c.name : '—';
   el.ovTier.textContent = deepestTier ? 'Tier ' + deepestTier : '—';
-  el.ovNext.textContent = nf(untouched);
+  // "Unlocked, untouched" is exactly the ready set — same number, not a second count.
+  el.ovNext.textContent = nf(ready);
 
   // next up — a handful of ready skills, prioritising the current branch focus
-  const readyNodes = FULL.nodes.filter(n => isAvailable(n.id));
   const inFocus = state.cats.size < CATEGORIES.length ? readyNodes.filter(n => state.cats.has(n.cat)) : readyNodes;
   const pool = (inFocus.length ? inFocus : readyNodes).slice().sort((a, b) => a.tier - b.tier).slice(0, 8);
   el.nextUp.innerHTML = pool.length ? pool.map(n => {
@@ -649,10 +662,23 @@ function flash(id) {
 let boardRect = null;
 function getBoardRect() { return boardRect || (boardRect = el.board.getBoundingClientRect()); }
 
+/* Level of detail. Below this zoom a node's 12px label lands at about 4px on
+   screen — an illegible smudge that still costs a text layout and raster for
+   every one of several hundred mounted nodes, on every frame of a pan. Under
+   the class the CSS drops the labels and the shadows and leaves plain
+   branch-coloured blocks, which is all the eye can resolve at that size
+   anyway. Tracked in a variable so a zoom that stays on one side of the
+   threshold does not touch classList and invalidate style for the subtree. */
+const LOD_FAR_BELOW = 0.45;
+let lodFar = null;
+
 function applyView() {
   const { x, y, k } = state.view;
   el.canvas.style.transform = `translate(${x}px, ${y}px) scale(${k})`;
   el.zoomLabel.textContent = Math.round(k * 100) + '%';
+
+  const far = k < LOD_FAR_BELOW;
+  if (far !== lodFar) { lodFar = far; el.canvas.classList.toggle('far', far); }
 }
 
 /* Pure state update, no DOM write — split out so the rAF-batched wheel

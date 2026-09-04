@@ -316,10 +316,14 @@ button { cursor: pointer; }
 
 #canvas {
   position: absolute; top: 0; left: 0; transform-origin: 0 0;
-  /* Promote to its own compositor layer: once it's a layer, pan/zoom just
-     slides or scales an existing bitmap instead of repainting ~4,000 SVG
-     paths and ~2,000 node buttons on every frame. */
-  will-change: transform;
+  /* No will-change: transform here, deliberately. The full board is
+     3888 x 17970 — nearly 70 megapixels — and promoting a surface that size
+     to its own compositor layer asks the browser to hold and re-rasterize
+     tiles for an area it can never show at once. There is no stable bitmap
+     to slide, either: syncVisibleNodes() mounts and unmounts node buttons
+     inside this element on every frame of a pan, so the layer's contents are
+     invalidated continuously. Leaving it unpromoted lets .board's
+     overflow: hidden clip painting to the viewport instead. */
 }
 
 .band {
@@ -432,6 +436,29 @@ button { cursor: pointer; }
 
 @keyframes pop { 0% { transform: scale(1); } 45% { transform: scale(1.06); } 100% { transform: scale(1); } }
 .node.pop { animation: pop .3s ease; }
+
+/* ---- far zoom (level of detail) ----
+   Added by applyView() below 45% zoom, where a 12.3px label renders at about
+   5px: unreadable, but still a full text layout and raster per node, several
+   hundred times per frame. Blocks carry the same information the eye can
+   actually use at that size — branch colour and learned state — so the text,
+   the tick marks and the shadows all come off until you zoom back in. */
+#canvas.far .node {
+  box-shadow: none;
+  transition: none;
+  border-radius: 6px;
+}
+#canvas.far .node-tier,
+#canvas.far .node-name,
+#canvas.far .node-mark { display: none; }
+
+/* The status accents are inset box-shadows at full detail; restate the two
+   that carry meaning as plain borders, which cost nothing to paint. */
+#canvas.far .node[data-status="available"] { border-left: 3px solid var(--c); }
+#canvas.far .node[data-status="learned"]   { border-left: 3px solid var(--green); }
+
+/* Hover lift is invisible at this scale and only forces repaints. */
+#canvas.far .node:hover { transform: none; box-shadow: none; }
 
 /* zoom cluster — floating dark pill, bottom centre */
 .zoombar {
